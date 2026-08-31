@@ -1,0 +1,62 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode
+# Build products
+build/
+DerivedData/
+.build/
+
+# User settings and workspace user data
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# Xcode project files (user-specific)
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Workspaces (CocoaPods, Carthage, SwiftPM can generate these)
+*.xcworkspace
+
+# Swift Package Manager
+/.build/
+/.swiftpm/
+Package.resolved
+
+# CocoaPods
+/Pods/
+Podfile.lock
+
+# Carthage
+/Carthage/Build/
+
+# fastlane
+/fastlane/report.xml
+/fastlane/Preview.html
+/fastlane/screenshots
+/fastlane/test_output
+
+# Derived files and caches
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Misc
+.idea/
+*.swp
+*.lock
+*.log
+
+# macOS metadata
+._*
