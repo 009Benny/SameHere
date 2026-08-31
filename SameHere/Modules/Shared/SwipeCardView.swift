@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CardView<Content:View>: View {
+struct SwipeCardView<Content:View>: View {
     let content: Content
     var swipeAction: (SwipeDirection) -> ()
     var onTapAction: () -> ()

@@ -19,7 +19,7 @@ struct HomeView: View {
                 BackgroundView()
                 
                 ForEach(viewModel.thoughts) { thought in
-                    CardView(
+                    SwipeCardView(
                         content: ItemView(thought: thought),
                         swipeAction: { direction in
                             viewModel.swipeItem(thought, direction: direction)
@@ -53,6 +53,7 @@ struct HomeView: View {
         ThoughView(
             thought: thought,
             isFullScreen: isFullScreen,
+            isDetail: false,
             animation: animation,
             answerAction: { optionSelected in
                 withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {

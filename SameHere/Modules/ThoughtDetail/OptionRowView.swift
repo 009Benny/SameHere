@@ -10,6 +10,7 @@ import SwiftUI
 struct OptionRowView: View {
     let option: OptionItem
     let selected: UUID?
+    let showPercentages: Bool
     
     let callback: ()->()
     
@@ -31,7 +32,7 @@ struct OptionRowView: View {
                     
                     Spacer()
                     
-                    if selected != nil {
+                    if showPercentages || selected != nil {
                         Text("\(option.counter)")
                             .padding(.horizontal, 20)
                     }
@@ -43,11 +44,11 @@ struct OptionRowView: View {
             .frame(height: 50)
             
         }
-        .disabled(selected != nil && selected != option.id)
+        .disabled(showPercentages || (selected != nil && selected != option.id) )
     }
     
     private func isSelected() -> Bool {
-        selected == option.id
+        showPercentages || (selected == option.id)
     }
 }
 
@@ -61,6 +62,7 @@ struct OptionRowView: View {
                 title: "Yes, I am",
                 counter: 50),
             selected: nil,
+            showPercentages: false,
             callback: {}
         )
         
@@ -70,6 +72,7 @@ struct OptionRowView: View {
                 title: "No, I'm not",
                 counter: 50),
             selected: nil,
+            showPercentages: false,
             callback: {}
         )
     }

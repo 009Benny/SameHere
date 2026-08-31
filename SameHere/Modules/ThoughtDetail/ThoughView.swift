@@ -10,7 +10,9 @@ import SwiftUI
 struct ThoughView: View {
     let thought: Thought
     let isFullScreen:Bool
+    var isDetail:Bool
     var animation: Namespace.ID
+    
     var answerAction: ((UUID) -> ())?
     var closeAction: (() -> ())?
     @State private var selected: UUID? = nil
@@ -21,7 +23,7 @@ struct ThoughView: View {
                 BackgroundView()
             }
             VStack {
-                if isFullScreen {
+                if isFullScreen && closeAction != nil {
                     HStack {
                         Spacer()
                         Button(action: {
@@ -54,6 +56,7 @@ struct ThoughView: View {
                         OptionRowView(
                             option: option,
                             selected: selected,
+                            showPercentages: isDetail
                         ) {
                             answerAction?(option.id)
                             selected = option.id
@@ -70,28 +73,3 @@ struct ThoughView: View {
 #Preview {
     HomeView()
 }
-
-//#Preview {
-//    let tought = Thought(
-//        id: UUID(),
-//        user: User(
-//            id: UUID(),
-//            name: "Benny",
-//            email: "benny@mail.com"
-//        ),
-//        message: "Are you unemployed?",
-//        options: [
-//            OptionItem(
-//                id: UUID(),
-//                title: "Yes, I am",
-//                counter: 50
-//            ),
-//            OptionItem(
-//                id: UUID(),
-//                title: "No, I'm not",
-//                counter: 100
-//            )
-//        ], topic: "Topic"
-//    )
-//    ThoughView(thought: tought, answerAction: {}, isFullScreen: true)
-//}

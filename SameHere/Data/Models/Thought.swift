@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Thought: Identifiable {
+struct Thought: Identifiable, Hashable {
     let id: UUID
     let user: User
     let message: String
@@ -15,7 +15,7 @@ struct Thought: Identifiable {
     let topic:String
 }
 
-struct OptionItem: Identifiable {
+struct OptionItem: Identifiable, Hashable {
     let id: UUID
     let title: String
     let counter: Int
