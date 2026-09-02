@@ -13,6 +13,10 @@ struct Thought: Identifiable, Hashable {
     let message: String
     let options: [OptionItem]
     let topic:String
+    
+    func getTotal() -> Int{
+        options.reduce(0, {$0 + $1.counter})
+    }
 }
 
 struct OptionItem: Identifiable, Hashable {

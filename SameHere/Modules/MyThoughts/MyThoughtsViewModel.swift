@@ -13,4 +13,8 @@ class MyThoughtsViewModel: ObservableObject {
     func loadData() async {
         self.thoughts = MockThoughs.getMockData()
     }
+    
+    func createThought() {
+        
+    }
 }

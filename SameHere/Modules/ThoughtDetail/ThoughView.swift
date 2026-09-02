@@ -12,12 +12,12 @@ struct ThoughView: View {
     let isFullScreen:Bool
     var isDetail:Bool
     var animation: Namespace.ID
-    
     var answerAction: ((UUID) -> ())?
     var closeAction: (() -> ())?
     @State private var selected: UUID? = nil
     
     var body: some View {
+        let total = thought.getTotal()
         ZStack{
             if isFullScreen {
                 BackgroundView()
@@ -55,6 +55,7 @@ struct ThoughView: View {
                     ForEach(thought.options) { option in
                         OptionRowView(
                             option: option,
+                            total: total,
                             selected: selected,
                             showPercentages: isDetail
                         ) {
