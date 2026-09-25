@@ -13,7 +13,7 @@ import SwiftUI
 /// appearance) inside a transparent circle of the requested diameter.
 /// Marked `accessibilityHidden` because it is purely decorative — the screen
 /// already exposes the title and instructions to VoiceOver.
-struct BadgeIconView: View {
+struct SameHereBadgeIconView: View {
     /// Diameter (width and height) of the badge, in points.
     let size: CGFloat
 
@@ -30,5 +30,5 @@ struct BadgeIconView: View {
 }
 
 #Preview {
-    BadgeIconView(size: 180)
+    SameHereBadgeIconView(size: 180)
 }

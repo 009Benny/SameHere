@@ -11,7 +11,9 @@ import SwiftUI
 struct SameHereApp: App {
     var body: some Scene {
         WindowGroup {
-            SHTabView()
+            // Everything — configuration, session restore, the auth gate and
+            // SHTabView — hangs off RootView. See `App/AppCoordinator.swift`.
+            RootView()
         }
     }
 }

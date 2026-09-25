@@ -60,3 +60,9 @@ playground.xcworkspace
 
 # macOS metadata
 ._*
+
+# Supabase credentials — the real values, never committed.
+# Config/Secrets.example.xcconfig is the template that IS committed.
+Config/*
+*.local.xcconfig
+Secrets*.xcconfig

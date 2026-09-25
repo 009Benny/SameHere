@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		175184143048C3D50055F102 /* AuthFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 175184133048C3D50055F102 /* AuthFeature */; };
+		17C12A45305C6E0000D873F4 /* SecretsDev.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 17C12A44305C6E0000D873F4 /* SecretsDev.xcconfig */; };
+		17C12A46305C6E0000D873F4 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 17C12A43305C6E0000D873F4 /* Secrets.xcconfig */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		172BA3B63020870800D9CCB0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,11 +33,26 @@
 		172BA3A83020870700D9CCB0 /* SameHere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SameHere.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		172BA3B53020870800D9CCB0 /* SameHereTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SameHereTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		172BA3BF3020870800D9CCB0 /* SameHereUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SameHereUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		17C12A43305C6E0000D873F4 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		17C12A44305C6E0000D873F4 /* SecretsDev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = SecretsDev.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		17C12A40305C5BBF00D873F4 /* Exceptions for "SameHere" folder in "SameHere" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 172BA3A73020870700D9CCB0 /* SameHere */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		172BA3AA3020870700D9CCB0 /* SameHere */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				17C12A40305C5BBF00D873F4 /* Exceptions for "SameHere" folder in "SameHere" target */,
+			);
 			path = SameHere;
 			sourceTree = "<group>";
 		};
@@ -52,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				175184143048C3D50055F102 /* AuthFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +100,8 @@
 				172BA3AA3020870700D9CCB0 /* SameHere */,
 				172BA3B83020870800D9CCB0 /* SameHereTests */,
 				172BA3C23020870800D9CCB0 /* SameHereUITests */,
+				17C12A43305C6E0000D873F4 /* Secrets.xcconfig */,
+				17C12A44305C6E0000D873F4 /* SecretsDev.xcconfig */,
 				172BA3A93020870700D9CCB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +136,7 @@
 			);
 			name = SameHere;
 			packageProductDependencies = (
+				175184133048C3D50055F102 /* AuthFeature */,
 			);
 			productName = SameHere;
 			productReference = 172BA3A83020870700D9CCB0 /* SameHere.app */;
@@ -195,6 +220,9 @@
 			);
 			mainGroup = 172BA39F3020870700D9CCB0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				175184123048C3D50055F102 /* XCLocalSwiftPackageReference "../AuthFeature" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 172BA3A93020870700D9CCB0 /* Products */;
 			projectDirPath = "";
@@ -212,6 +240,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17C12A45305C6E0000D873F4 /* SecretsDev.xcconfig in Resources */,
+				17C12A46305C6E0000D873F4 /* Secrets.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +365,7 @@
 		};
 		172BA3C83020870800D9CCB0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 17C12A43305C6E0000D873F4 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -392,6 +423,7 @@
 		};
 		172BA3CA3020870800D9CCB0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 17C12A44305C6E0000D873F4 /* SecretsDev.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -400,6 +432,7 @@
 				DEVELOPMENT_TEAM = KV62XM9X65;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SameHere/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -432,6 +465,7 @@
 				DEVELOPMENT_TEAM = KV62XM9X65;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SameHere/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -578,6 +612,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		175184123048C3D50055F102 /* XCLocalSwiftPackageReference "../AuthFeature" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../AuthFeature;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		175184133048C3D50055F102 /* AuthFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AuthFeature;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 172BA3A03020870700D9CCB0 /* Project object */;
 }

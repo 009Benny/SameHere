@@ -5,18 +5,35 @@
 //  Created by Benny Reyes on 04/08/26.
 //
 
+import AuthFeature
 import SwiftUI
 
 struct MyThoughtsView : View {
     @StateObject private var viewModel = MyThoughtsViewModel()
     @Namespace private var animation
     @State private var showCreateSheet = false
+
+    /// Optional so the SwiftUI preview below still works outside the auth gate.
+    /// Behind the gate it is always present.
+    @Environment(AppServices.self) private var services: AppServices?
+    @State private var isShowingUpgrade = false
+    @State private var hasDismissedGuestBanner = false
     
     var body: some View {
         NavigationStack {
             ZStack {
                 BackgroundView()
-                VStack{
+                VStack(spacing: 0) {
+                    if let services, services.isGuest, !hasDismissedGuestBanner {
+                        GuestBanner(thoughtCount: viewModel.thoughts.count) {
+                            isShowingUpgrade = true
+                        } onDismiss: {
+                            withAnimation { hasDismissedGuestBanner = true }
+                        }
+                        .padding(.vertical, 10)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                    }
+
                     List{
                         ForEach(viewModel.thoughts) { thought in
                             NavigationLink(value: thought) {
@@ -39,6 +56,9 @@ struct MyThoughtsView : View {
                     )
                 })
                 .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        AccountMenu(isShowingUpgrade: $isShowingUpgrade)
+                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("+", action: {
                             showCreateSheet = true
@@ -47,6 +67,11 @@ struct MyThoughtsView : View {
                 }
                 .sheet(isPresented: $showCreateSheet) {
                     CreateThoughSheet(viewModel: viewModel)
+                }
+                .sheet(isPresented: $isShowingUpgrade) {
+                    if let services {
+                        UpgradeAccountSheet(auth: services.auth)
+                    }
                 }
             }
         }
