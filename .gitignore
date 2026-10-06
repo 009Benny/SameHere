@@ -66,3 +66,8 @@ playground.xcworkspace
 Config/*
 *.local.xcconfig
 Secrets*.xcconfig
+
+
+# Scripts seed
+scripts/.env
+__pycache__/

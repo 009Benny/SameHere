@@ -115,7 +115,14 @@ nonisolated struct SupabaseClient: Sendable {
             url: baseURL.appendingPathComponent(table),
             resolvingAgainstBaseURL: false
         )
-        if !query.isEmpty { components?.queryItems = query }
+        if !query.isEmpty {
+            components?.queryItems = query
+            // URLComponents leaves "+" alone, but servers read a bare "+" in a
+            // query as a space — which breaks timestamps like "...+00:00".
+            let encodedQuery = components?.percentEncodedQuery?
+                .replacingOccurrences(of: "+", with: "%2B")
+            components?.percentEncodedQuery = encodedQuery
+        }
 
         guard let url = components?.url else {
             throw SupabaseRequestError.server(status: 0, message: "Could not build a URL for \(table).")

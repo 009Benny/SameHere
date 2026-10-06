@@ -15,7 +15,11 @@ nonisolated struct ThoughtDTO: Decodable, Sendable {
     let id: UUID
     let message: String
     let topic: String
-    let createdAt: Date?
+    /// Kept as Postgres sent it (microsecond precision) because the feed uses
+    /// it as a pagination cursor, and a round trip through `Date` would lose
+    /// digits and break the `eq` comparison. Use `PostgresTimestamp.parse` if a
+    /// `Date` is ever needed for display.
+    let createdAt: String?
     let authorId: UUID?
     let isAiGenerated: Bool?
     /// Embedded via the `author_id → profiles.id` foreign key.

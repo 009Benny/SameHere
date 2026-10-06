@@ -47,6 +47,7 @@ struct ThoughView: View {
                     Text(thought.message)
                         .font(.system(size: 20, weight: .semibold, design: .monospaced))
                         .font(.headline)
+                        .padding(10)
                 }
                 
                 
