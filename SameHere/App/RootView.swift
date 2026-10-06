@@ -112,7 +112,7 @@ struct StatusView: View {
 
             ZStack {
                 RoundedRectangle(cornerRadius: 22, style: .circular)
-                    .viewGlassContainer(height: 300)
+                    .viewGlassContainer(height: 300, hPadding: 0)
                     .padding(20)
                 
                 VStack(spacing: 16) {

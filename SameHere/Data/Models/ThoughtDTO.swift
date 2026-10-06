@@ -70,6 +70,28 @@ nonisolated struct AnswerInsert: Encodable, Sendable {
     let userId: UUID
 }
 
+/// Insert payload for `public.thoughts`. `authorId` must equal `auth.uid()` or
+/// the RLS policy refuses the write.
+nonisolated struct ThoughtInsert: Encodable, Sendable {
+    let authorId: UUID
+    let message: String
+    let topic: String
+    let isAiGenerated: Bool
+}
+
+/// Insert payload for `public.options`. `seed_votes` is left to its default
+/// of 0 — only the seed script sets it.
+nonisolated struct OptionInsert: Encodable, Sendable {
+    let thoughtId: UUID
+    let title: String
+    let position: Int
+}
+
+/// The one column needed back from an insert.
+nonisolated struct InsertedIDDTO: Decodable, Sendable {
+    let id: UUID
+}
+
 extension ThoughtDTO {
     /// Combines a thought row with its options into the model the views use.
     func thought(options: [OptionItem]) -> Thought {

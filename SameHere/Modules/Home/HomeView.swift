@@ -11,7 +11,8 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
     @State private var selectedTought: Thought? = nil
     @Namespace private var animation
-    private let visibleCardCount = 3
+    /// The top card plus the one revealed while it is swiped away.
+    private let visibleCardCount = 2
 
     /// Optional so the preview below still works outside the auth gate, on mocks.
     /// Behind the gate it is always present.
@@ -23,12 +24,16 @@ struct HomeView: View {
                 
                 BackgroundView()
                 
-                // Only the top few cards are drawn. The rest are hidden behind
-                // them anyway, but each one adds its shadow, and a deep stack
-                // turns those shadows into a dark frame around the card.
+                // Only the top two cards are drawn, and only the top one casts a
+                // shadow. The card material is translucent (very much so in dark
+                // mode), so shadows of the cards underneath show through it and
+                // stack up into a dark frame.
                 ForEach(viewModel.thoughts.suffix(visibleCardCount)) { thought in
                     SwipeCardView(
-                        content: ItemView(thought: thought),
+                        content: ItemView(
+                            thought: thought,
+                            castsShadow: thought.id == viewModel.thoughts.last?.id
+                        ),
                         swipeAction: { direction in
                             viewModel.swipeItem(thought, direction: direction)
                         },
@@ -82,6 +87,7 @@ struct HomeView: View {
     func ItemView(
         thought: Thought,
         isFullScreen: Bool = false,
+        castsShadow: Bool = true
     ) -> some View {
         ThoughView(
             thought: thought,
@@ -97,7 +103,8 @@ struct HomeView: View {
                 withAnimation(.spring(response: 0.2, dampingFraction: 0.3)) {
                     selectedTought = nil
                 }
-            }
+            },
+            castsShadow: castsShadow
         )
     }
     

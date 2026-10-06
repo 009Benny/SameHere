@@ -71,7 +71,12 @@ class HomeViewModel: ObservableObject {
             // shown or answered; keep going a little while the stack is low.
             var attempts = 0
             repeat {
-                let page = try await repository.fetchFeedPage(after: nextCursor, pageSize: pageSize)
+                let page = try await repository.fetchFeedPage(
+                    after: nextCursor,
+                    pageSize: pageSize,
+                    // Your own thoughts live in the My Thoughts tab, not the feed.
+                    excludingAuthor: currentUserID
+                )
                 nextCursor = page.nextCursor
                 hasMore = page.nextCursor != nil
 

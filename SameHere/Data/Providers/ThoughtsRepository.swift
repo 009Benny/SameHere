@@ -72,11 +72,15 @@ nonisolated struct ThoughtsRepository: Sendable {
     /// short; this keeps reading forward until the page is full or the table
     /// ends, capped at a few requests so it never loops for long.
     ///
+    /// - Parameter excludingAuthor: Leave out thoughts written by this user, so
+    ///   people don't get their own thoughts to answer. They see them in the
+    ///   My Thoughts tab instead; everyone else still gets them in the feed.
     /// - Returns: The thoughts, plus the cursor for the next call — `nil` when
     ///   there is nothing older left.
     func fetchFeedPage(after cursor: FeedCursor?,
                        pageSize: Int = 10,
-                       topic: String? = nil) async throws -> FeedPage {
+                       topic: String? = nil,
+                       excludingAuthor: UUID? = nil) async throws -> FeedPage {
         let answered = try await fetchAnsweredThoughtIDs()
 
         var collected: [ThoughtDTO] = []
@@ -92,15 +96,24 @@ nonisolated struct ThoughtsRepository: Sendable {
             if let topic, !topic.isEmpty {
                 query.append(.init(name: "topic", value: "eq.\(topic)"))
             }
+            // Both conditions go in one `and=(...)` so neither `or` group
+            // can be confused with the other.
+            var conditions: [String] = []
+            if let excludingAuthor {
+                // `author_id <> me` alone would also drop the seeded thoughts,
+                // whose author_id is NULL (NULL <> x is never true in SQL).
+                let me = excludingAuthor.uuidString.lowercased()
+                conditions.append("or(author_id.is.null,author_id.neq.\(me))")
+            }
             if let position {
                 // Rows strictly after the cursor. The timestamp is quoted because
                 // it contains "." and ":", which PostgREST treats as syntax.
                 let ts = position.createdAt
                 let id = position.id.uuidString.lowercased()
-                query.append(.init(
-                    name: "or",
-                    value: "(created_at.lt.\"\(ts)\",and(created_at.eq.\"\(ts)\",id.lt.\(id)))"
-                ))
+                conditions.append("or(created_at.lt.\"\(ts)\",and(created_at.eq.\"\(ts)\",id.lt.\(id)))")
+            }
+            if !conditions.isEmpty {
+                query.append(.init(name: "and", value: "(\(conditions.joined(separator: ",")))"))
             }
 
             let rows: [ThoughtDTO] = try await client.get("thoughts", query: query)
@@ -153,6 +166,50 @@ nonisolated struct ThoughtsRepository: Sendable {
             query: [.init(name: "select", value: "thought_id,option_id")]
         )
         return Set(rows.map(\.thoughtId))
+    }
+
+    /// Creates a thought with its options, authored by `authorID`.
+    ///
+    /// Two inserts — the thought, then its options — because the options need
+    /// the thought's id. PostgREST has no transaction across requests, so if the
+    /// options fail the thought is deleted again rather than left behind with
+    /// nothing to answer.
+    ///
+    /// - Returns: The new thought's id.
+    @discardableResult
+    func createThought(message: String,
+                       topic: String,
+                       options: [String],
+                       authorID: UUID) async throws -> UUID {
+        let inserted = try await client.insert(
+            "thoughts",
+            body: ThoughtInsert(
+                authorId: authorID,
+                message: message,
+                topic: topic,
+                isAiGenerated: false
+            ),
+            returning: [InsertedIDDTO].self
+        )
+        guard let thoughtID = inserted.first?.id else {
+            throw SupabaseRequestError.decoding("The new thought came back without an id.")
+        }
+
+        do {
+            try await client.insert(
+                "options",
+                body: options.enumerated().map { position, title in
+                    OptionInsert(thoughtId: thoughtID, title: title, position: position)
+                }
+            )
+        } catch {
+            try? await client.delete(
+                "thoughts",
+                query: [.init(name: "id", value: "eq.\(thoughtID.uuidString.lowercased())")]
+            )
+            throw error
+        }
+        return thoughtID
     }
 
     /// Casts a vote.

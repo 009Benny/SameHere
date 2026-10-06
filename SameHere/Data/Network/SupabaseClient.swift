@@ -104,6 +104,14 @@ nonisolated struct SupabaseClient: Sendable {
         _ = try await send(request)
     }
 
+    /// `DELETE /rest/v1/<table>?<filters>`. Always pass a filter: PostgREST
+    /// refuses an unfiltered delete, and RLS limits it to the caller's rows.
+    func delete(_ table: String, query: [URLQueryItem]) async throws {
+        var request = try await makeRequest(table, method: "DELETE", query: query)
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        _ = try await send(request)
+    }
+
     // MARK: - Plumbing
 
     private func makeRequest(_ table: String,
