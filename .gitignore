@@ -70,4 +70,6 @@ Secrets*.xcconfig
 
 # Scripts seed
 scripts/.env
+scripts/seed_data/
 __pycache__/
+.venv/
