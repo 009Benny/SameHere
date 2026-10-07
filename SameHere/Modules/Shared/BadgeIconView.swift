@@ -9,8 +9,8 @@ import SwiftUI
 
 /// Circular brand badge used as the visual anchor of auth and onboarding screens.
 ///
-/// Renders the app logo (`logoDarkMode` — which already adapts to light/dark
-/// appearance) inside a transparent circle of the requested diameter.
+/// Renders the app logo (the `logo` image set) inside a transparent circle of
+/// the requested diameter.
 /// Marked `accessibilityHidden` because it is purely decorative — the screen
 /// already exposes the title and instructions to VoiceOver.
 struct SameHereBadgeIconView: View {
@@ -22,7 +22,7 @@ struct SameHereBadgeIconView: View {
             .fill(Color.clear)
             .frame(width: size, height: size)
             .overlay {
-                Image("hand")
+                Image("logo")
                     .resizable()
             }
             .accessibilityHidden(true)
