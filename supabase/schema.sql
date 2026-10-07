@@ -9,7 +9,8 @@
 --   OptionItem  -> public.options  (+ public.option_results for live counts)
 --
 -- After this file: auth_guests.sql, then grants.sql (table privileges —
--- without them every API request fails with 42501 permission denied).
+-- without them every API request fails with 42501 permission denied),
+-- then delete_account.sql (in-app account deletion).
 -- ============================================================
 
 create extension if not exists "pgcrypto"; -- gen_random_uuid()

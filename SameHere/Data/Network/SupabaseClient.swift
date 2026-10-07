@@ -104,6 +104,14 @@ nonisolated struct SupabaseClient: Sendable {
         _ = try await send(request)
     }
 
+    /// `POST /rest/v1/rpc/<function>` for a Postgres function that takes no
+    /// arguments and returns nothing.
+    func rpc(_ function: String) async throws {
+        var request = try await makeRequest("rpc/\(function)", method: "POST")
+        request.httpBody = Data("{}".utf8)
+        _ = try await send(request)
+    }
+
     /// `DELETE /rest/v1/<table>?<filters>`. Always pass a filter: PostgREST
     /// refuses an unfiltered delete, and RLS limits it to the caller's rows.
     func delete(_ table: String, query: [URLQueryItem]) async throws {

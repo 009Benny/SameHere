@@ -120,6 +120,16 @@
         }
       }
     },
+    "Couldn't delete your account: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo eliminar tu cuenta: %@"
+          }
+        }
+      }
+    },
     "Couldn't load thoughts" : {
       "localizations" : {
         "es-419" : {
@@ -156,6 +166,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crear un pensamiento"
+          }
+        }
+      }
+    },
+    "Delete account" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar cuenta"
+          }
+        }
+      }
+    },
+    "Delete your account?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Eliminar tu cuenta?"
           }
         }
       }
@@ -286,6 +316,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opciones"
+          }
+        }
+      }
+    },
+    "Profile" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perfil"
           }
         }
       }
@@ -446,6 +486,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El servidor respondió algo inesperado."
+          }
+        }
+      }
+    },
+    "This permanently deletes your account, your thoughts and your answers. This can't be undone." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esto elimina para siempre tu cuenta, tus pensamientos y tus respuestas. No se puede deshacer."
           }
         }
       }

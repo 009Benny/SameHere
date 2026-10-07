@@ -107,8 +107,18 @@ final class AppCoordinator {
     /// - Parameter forgettingCredentials: Also empties the Face ID vault.
     ///
     /// > Warning: For a guest this is irreversible — there is no password to come
-    /// > back with. Every call site must confirm first; see `AccountMenu`.
+    /// > back with. Every call site must confirm first; see `ProfileView`.
     func signOut(forgettingCredentials: Bool = false) async {
         await services?.auth.signOut(forgetBiometricCredentials: forgettingCredentials)
+    }
+
+    /// Deletes the account on the server, then signs out and forgets the
+    /// Face ID credentials, which would otherwise point at a user that no
+    /// longer exists. Throws — and stays signed in — if the deletion fails,
+    /// so the user can try again.
+    func deleteAccount() async throws {
+        guard let services else { return }
+        try await services.account.deleteMyAccount()
+        await services.auth.signOut(forgetBiometricCredentials: true)
     }
 }

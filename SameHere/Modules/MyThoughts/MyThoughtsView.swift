@@ -64,9 +64,6 @@ struct MyThoughtsView : View {
                     ToolbarItem(placement: .principal) {
                         EmptyView()
                     }
-                    ToolbarItem(placement: .topBarLeading) {
-                        AccountMenu(isShowingUpgrade: $isShowingUpgrade)
-                    }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("+", action: {
                             showCreateSheet = true

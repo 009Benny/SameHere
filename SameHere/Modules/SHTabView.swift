@@ -16,6 +16,9 @@ struct SHTabView: View {
             Tab("My Thoughts", systemImage: "person.bubble"){
                 MyThoughtsView()
             }
+            Tab("Profile", systemImage: "person.crop.circle"){
+                ProfileView()
+            }
         }
     }
 }

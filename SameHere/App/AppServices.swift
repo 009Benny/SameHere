@@ -39,6 +39,9 @@ final class AppServices {
     /// What the view models should talk to.
     let thoughts: ThoughtsRepository
 
+    /// Account deletion and other account-level calls.
+    let account: AccountRepository
+
     init(configuration: SupabaseAuthConfiguration) {
         self.configuration = configuration
 
@@ -65,6 +68,7 @@ final class AppServices {
         )
         self.client = client
         self.thoughts = ThoughtsRepository(client: client)
+        self.account = AccountRepository(client: client)
     }
 
     // MARK: - Who is signed in
