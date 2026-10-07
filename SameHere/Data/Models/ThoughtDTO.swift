@@ -89,6 +89,33 @@ nonisolated struct OptionInsert: Encodable, Sendable {
     let position: Int
 }
 
+/// Insert payload for `public.reports`.
+nonisolated struct ReportInsert: Encodable, Sendable {
+    let thoughtId: UUID
+    let reporterId: UUID
+    let reason: String
+}
+
+/// A row of `public.reports` — only the signed-in user's own are readable.
+nonisolated struct ReportedThoughtDTO: Decodable, Sendable {
+    let thoughtId: UUID
+}
+
+/// Insert payload / row of `public.blocks`.
+nonisolated struct BlockInsert: Encodable, Sendable {
+    let blockerId: UUID
+    let blockedId: UUID
+}
+
+nonisolated struct BlockedUserDTO: Decodable, Sendable {
+    let blockedId: UUID
+}
+
+/// `profiles.terms_accepted_at`, read and written on its own.
+nonisolated struct TermsAcceptanceDTO: Codable, Sendable {
+    let termsAcceptedAt: String?
+}
+
 /// The one column needed back from an insert.
 nonisolated struct InsertedIDDTO: Decodable, Sendable {
     let id: UUID
@@ -103,7 +130,8 @@ extension ThoughtDTO {
             message: message,
             options: options,
             topic: topic,
-            sourceURL: sourceLink.flatMap { URL(string: $0) }
+            sourceURL: sourceLink.flatMap { URL(string: $0) },
+            authorID: authorId
         )
     }
 }

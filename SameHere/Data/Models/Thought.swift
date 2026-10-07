@@ -16,6 +16,8 @@ struct Thought: Identifiable, Hashable {
     /// The source a seeded question links to. `nil` means a community member
     /// wrote it in the app — the UI shows a person icon instead of a clip.
     var sourceURL: URL? = nil
+    /// Who wrote it. `nil` for seeded questions — they have no author to block.
+    var authorID: UUID? = nil
     
     func getTotal() -> Int{
         options.reduce(0, {$0 + $1.counter})

@@ -124,6 +124,27 @@ class HomeViewModel: ObservableObject {
         return try await repository.fetchOptionResults(thoughtID: thought.id)
     }
 
+    /// Reports the thought and takes it off this user's stack for good.
+    public func report(_ thought: Thought, reason: ReportReason) async throws {
+        if let repository, let currentUserID {
+            try await repository.report(thoughtID: thought.id, reason: reason, reporterID: currentUserID)
+        }
+        removeFromStack(thought)
+    }
+
+    /// Blocks the thought's author: everything of theirs leaves the stack now,
+    /// and the feed stops serving it from the next page on.
+    public func blockAuthor(of thought: Thought) async throws {
+        guard let authorID = thought.authorID else { return }
+        if let repository, let currentUserID {
+            try await repository.block(userID: authorID, blockerID: currentUserID)
+        }
+        thoughts.removeAll { $0.authorID == authorID }
+        if thoughts.count <= prefetchThreshold {
+            Task { await loadMore() }
+        }
+    }
+
     /// Takes a card off the stack and tops it up when it runs low.
     public func removeFromStack(_ thought: Thought) {
         thoughts.removeAll { $0.id == thought.id }

@@ -81,7 +81,14 @@ nonisolated struct ThoughtsRepository: Sendable {
                        pageSize: Int = 10,
                        topic: String? = nil,
                        excludingAuthor: UUID? = nil) async throws -> FeedPage {
-        let answered = try await fetchAnsweredThoughtIDs()
+        // What this user should no longer see: what they answered or reported,
+        // and anything by people they blocked. Read fresh for every page, so a
+        // block or report takes effect on the very next one.
+        async let answeredIDs = fetchAnsweredThoughtIDs()
+        async let reportedIDs = fetchReportedThoughtIDs()
+        async let blockedIDs = fetchBlockedUserIDs()
+        let skipped = try await answeredIDs.union(reportedIDs)
+        let hiddenAuthors = try await blockedIDs.union(excludingAuthor.map { [$0] } ?? [])
 
         var collected: [ThoughtDTO] = []
         var position = cursor
@@ -99,11 +106,12 @@ nonisolated struct ThoughtsRepository: Sendable {
             // Both conditions go in one `and=(...)` so neither `or` group
             // can be confused with the other.
             var conditions: [String] = []
-            if let excludingAuthor {
-                // `author_id <> me` alone would also drop the seeded thoughts,
-                // whose author_id is NULL (NULL <> x is never true in SQL).
-                let me = excludingAuthor.uuidString.lowercased()
-                conditions.append("or(author_id.is.null,author_id.neq.\(me))")
+            if !hiddenAuthors.isEmpty {
+                // `author_id not in (...)` alone would also drop the seeded
+                // thoughts, whose author_id is NULL (NULL comparisons are never
+                // true in SQL), so keep those explicitly.
+                let ids = hiddenAuthors.map { $0.uuidString.lowercased() }.sorted().joined(separator: ",")
+                conditions.append("or(author_id.is.null,author_id.not.in.(\(ids)))")
             }
             if let position {
                 // Rows strictly after the cursor. The timestamp is quoted because
@@ -120,7 +128,7 @@ nonisolated struct ThoughtsRepository: Sendable {
             if let last = rows.last, let createdAt = last.createdAt {
                 position = FeedCursor(createdAt: createdAt, id: last.id)
             }
-            collected += rows.filter { !answered.contains($0.id) }
+            collected += rows.filter { !skipped.contains($0.id) }
 
             if rows.count < pageSize { reachedEnd = true; break }
             if collected.count >= pageSize { break }
@@ -166,6 +174,52 @@ nonisolated struct ThoughtsRepository: Sendable {
             query: [.init(name: "select", value: "thought_id,option_id")]
         )
         return Set(rows.map(\.thoughtId))
+    }
+
+    // MARK: - Moderation
+
+    /// Thoughts the signed-in user reported. RLS only returns their own.
+    func fetchReportedThoughtIDs() async throws -> Set<UUID> {
+        let rows: [ReportedThoughtDTO] = try await client.get(
+            "reports",
+            query: [.init(name: "select", value: "thought_id")]
+        )
+        return Set(rows.map(\.thoughtId))
+    }
+
+    /// People the signed-in user blocked. RLS only returns their own.
+    func fetchBlockedUserIDs() async throws -> Set<UUID> {
+        let rows: [BlockedUserDTO] = try await client.get(
+            "blocks",
+            query: [.init(name: "select", value: "blocked_id")]
+        )
+        return Set(rows.map(\.blockedId))
+    }
+
+    /// Reports a thought. Reporting the same thought twice is not an error.
+    /// Three reports from different people hide it for everyone (see
+    /// `supabase/moderation.sql`).
+    func report(thoughtID: UUID, reason: ReportReason, reporterID: UUID) async throws {
+        do {
+            try await client.insert(
+                "reports",
+                body: ReportInsert(thoughtId: thoughtID, reporterId: reporterID, reason: reason.rawValue)
+            )
+        } catch SupabaseRequestError.duplicate {
+            // Already reported — the outcome the user wanted.
+        }
+    }
+
+    /// Blocks a person: their thoughts stop appearing in this user's feed.
+    func block(userID: UUID, blockerID: UUID) async throws {
+        do {
+            try await client.insert(
+                "blocks",
+                body: BlockInsert(blockerId: blockerID, blockedId: userID)
+            )
+        } catch SupabaseRequestError.duplicate {
+            // Already blocked.
+        }
     }
 
     /// Creates a thought with its options, authored by `authorID`.

@@ -34,6 +34,7 @@ struct ProfileView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         userCard
+                        linksCard
                         actionsCard
 
                         if let deleteError {
@@ -133,6 +134,28 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)
         .padding(.horizontal, 16)
+        .profileCard()
+    }
+
+    /// Rules, privacy and a way to reach you — App Review wants a published
+    /// contact for apps with user-generated content.
+    private var linksCard: some View {
+        VStack(spacing: 0) {
+            Link(destination: AppLinks.termsOfUse) {
+                actionRow("Terms of Use", systemImage: "doc.text")
+            }
+            Divider()
+                .padding(.leading, 16)
+            Link(destination: AppLinks.privacyPolicy) {
+                actionRow("Privacy Policy", systemImage: "lock.shield")
+            }
+            Divider()
+                .padding(.leading, 16)
+            Link(destination: AppLinks.supportEmail) {
+                actionRow("Contact support", systemImage: "envelope")
+            }
+        }
+        .buttonStyle(.plain)
         .profileCard()
     }
 

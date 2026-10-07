@@ -10,7 +10,8 @@
 --
 -- After this file: auth_guests.sql, then grants.sql (table privileges —
 -- without them every API request fails with 42501 permission denied),
--- then delete_account.sql (in-app account deletion).
+-- then delete_account.sql (in-app account deletion), then moderation.sql
+-- (banned words, reports, blocks, community rules).
 -- ============================================================
 
 create extension if not exists "pgcrypto"; -- gen_random_uuid()

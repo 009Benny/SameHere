@@ -59,6 +59,11 @@ struct MyThoughtsView : View {
                         isDetail: true,
                         animation: animation
                     )
+                    // The system zoom transition, not matchedGeometryEffect:
+                    // it follows the interactive swipe-back gesture. A shared
+                    // matchedGeometryEffect across a push left the card shrunk
+                    // in the corner when that swipe was cancelled.
+                    .navigationTransition(.zoom(sourceID: thought.id, in: animation))
                 })
                 .toolbar {
                     ToolbarItem(placement: .principal) {
@@ -159,7 +164,6 @@ private struct ThoughtsCard: View {
                         .font(.body)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .matchedGeometryEffect(id: "background_\(thought.id)", in: animation)
                     Image(systemName: "chevron.right")
                         .font(.footnote.weight(.semibold))
                         .foregroundStyle(.tertiary)
@@ -167,6 +171,8 @@ private struct ThoughtsCard: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 14)
                 .contentShape(Rectangle())
+                // Where the detail zooms out from, and back into.
+                .matchedTransitionSource(id: thought.id, in: animation)
             }
             .buttonStyle(.plain)
 

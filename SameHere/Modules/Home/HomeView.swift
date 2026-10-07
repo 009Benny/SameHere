@@ -131,7 +131,14 @@ struct HomeView: View {
                     selectedTought = nil
                 }
             },
-            castsShadow: castsShadow
+            castsShadow: castsShadow,
+            reportAction: { reason in
+                try await viewModel.report(thought, reason: reason)
+            },
+            // Only offered for thoughts with an author; ThoughView checks.
+            blockAction: {
+                try await viewModel.blockAuthor(of: thought)
+            }
         )
     }
     

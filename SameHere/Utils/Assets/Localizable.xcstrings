@@ -80,6 +80,36 @@
         }
       }
     },
+    "Block" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloquear"
+          }
+        }
+      }
+    },
+    "Block this person" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bloquear a esta persona"
+          }
+        }
+      }
+    },
+    "Block this person?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Bloquear a esta persona?"
+          }
+        }
+      }
+    },
     "Can't reach Same Here" : {
       "localizations" : {
         "es-419" : {
@@ -116,6 +146,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerrar"
+          }
+        }
+      }
+    },
+    "Community rules" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reglas de la comunidad"
+          }
+        }
+      }
+    },
+    "Contact support" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contactar a soporte"
           }
         }
       }
@@ -250,6 +300,16 @@
         }
       }
     },
+    "Harassment or bullying" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acoso o intimidación"
+          }
+        }
+      }
+    },
     "Has a source" : {
       "localizations" : {
         "es-419" : {
@@ -266,6 +326,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inicio"
+          }
+        }
+      }
+    },
+    "I agree" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acepto"
+          }
+        }
+      }
+    },
+    "More options" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Más opciones"
           }
         }
       }
@@ -290,12 +370,42 @@
         }
       }
     },
+    "No hate, harassment or bullying." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada de odio, acoso ni intimidación."
+          }
+        }
+      }
+    },
     "No ideas yet" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aún no tienes ideas"
+          }
+        }
+      }
+    },
+    "No sexual or violent content." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada de contenido sexual ni violento."
+          }
+        }
+      }
+    },
+    "No spam or ads." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nada de spam ni publicidad."
           }
         }
       }
@@ -310,12 +420,32 @@
         }
       }
     },
+    "Offensive or hateful" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ofensivo o de odio"
+          }
+        }
+      }
+    },
     "Options" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opciones"
+          }
+        }
+      }
+    },
+    "Privacy Policy" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Política de privacidad"
           }
         }
       }
@@ -350,6 +480,36 @@
         }
       }
     },
+    "Report thought" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reportar pensamiento"
+          }
+        }
+      }
+    },
+    "Respect other people's privacy." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Respeta la privacidad de los demás."
+          }
+        }
+      }
+    },
+    "Same Here is a place to share what you think and find out who thinks the same. To keep it that way:" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same Here es un lugar para compartir lo que piensas y descubrir quién piensa igual. Para que siga así:"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "es-419" : {
@@ -376,6 +536,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mejor guardar mi cuenta"
+          }
+        }
+      }
+    },
+    "Sexual content" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contenido sexual"
           }
         }
       }
@@ -440,6 +610,26 @@
         }
       }
     },
+    "Something else" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otro motivo"
+          }
+        }
+      }
+    },
+    "Spam" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spam"
+          }
+        }
+      }
+    },
     "Sports" : {
       "localizations" : {
         "es-419" : {
@@ -480,12 +670,52 @@
         }
       }
     },
+    "Terms of Use" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Términos de uso"
+          }
+        }
+      }
+    },
+    "That contains words that aren't allowed in Same Here. Please rephrase it." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contiene palabras que no se permiten en Same Here. Intenta decirlo de otra forma."
+          }
+        }
+      }
+    },
+    "That didn't go through: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo completar: %@"
+          }
+        }
+      }
+    },
     "The server sent something unexpected." : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "El servidor respondió algo inesperado."
+          }
+        }
+      }
+    },
+    "There's zero tolerance for objectionable content or abusive users. You can report any thought and block anyone. Content that breaks these rules is removed, and accounts that post it may be banned." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No toleramos contenido ofensivo ni usuarios abusivos. Puedes reportar cualquier pensamiento y bloquear a cualquier persona. El contenido que rompa estas reglas se elimina, y las cuentas que lo publiquen pueden ser suspendidas."
           }
         }
       }
@@ -550,6 +780,16 @@
         }
       }
     },
+    "Why are you reporting this thought?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Por qué reportas este pensamiento?"
+          }
+        }
+      }
+    },
     "Work" : {
       "localizations" : {
         "es-419" : {
@@ -596,6 +836,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No tienes permiso para hacer eso."
+          }
+        }
+      }
+    },
+    "You won't see it again. Thoughts reported by several people are hidden for everyone." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No lo volverás a ver. Los pensamientos que reportan varias personas se ocultan para todos."
+          }
+        }
+      }
+    },
+    "You won't see their thoughts anymore." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya no verás sus pensamientos."
           }
         }
       }

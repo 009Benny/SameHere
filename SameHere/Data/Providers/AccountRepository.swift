@@ -23,4 +23,26 @@ nonisolated struct AccountRepository: Sendable {
     func deleteMyAccount() async throws {
         try await client.rpc("delete_my_account")
     }
+
+    /// Whether this account already agreed to the community rules.
+    func hasAcceptedTerms(userID: UUID) async throws -> Bool {
+        let rows: [TermsAcceptanceDTO] = try await client.get(
+            "profiles",
+            query: [
+                .init(name: "select", value: "terms_accepted_at"),
+                .init(name: "id", value: "eq.\(userID.uuidString.lowercased())")
+            ]
+        )
+        return rows.first?.termsAcceptedAt != nil
+    }
+
+    /// Records that this account agreed to the community rules, now.
+    func acceptTerms(userID: UUID) async throws {
+        let now = ISO8601DateFormatter().string(from: Date())
+        try await client.update(
+            "profiles",
+            query: [.init(name: "id", value: "eq.\(userID.uuidString.lowercased())")],
+            body: TermsAcceptanceDTO(termsAcceptedAt: now)
+        )
+    }
 }

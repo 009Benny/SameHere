@@ -15,6 +15,8 @@ nonisolated enum SupabaseRequestError: LocalizedError, Equatable {
     case duplicate
     /// Row level security refused the write.
     case forbidden
+    /// The text contains a word on the banned list (`supabase/moderation.sql`).
+    case contentRejected
     /// Anything else the server said.
     case server(status: Int, message: String)
     /// The response did not decode into the expected shape.
@@ -30,6 +32,8 @@ nonisolated enum SupabaseRequestError: LocalizedError, Equatable {
             return String(localized: "You already answered this one.")
         case .forbidden:
             return String(localized: "You don't have permission to do that.")
+        case .contentRejected:
+            return String(localized: "That contains words that aren't allowed in Same Here. Please rephrase it.")
         case .server(_, let message):
             return message
         case .decoding:
@@ -112,6 +116,16 @@ nonisolated struct SupabaseClient: Sendable {
         _ = try await send(request)
     }
 
+    /// `PATCH /rest/v1/<table>?<filters>` — updates the matching rows.
+    func update<Body: Encodable>(_ table: String,
+                                 query: [URLQueryItem],
+                                 body: Body) async throws {
+        var request = try await makeRequest(table, method: "PATCH", query: query)
+        request.setValue("return=minimal", forHTTPHeaderField: "Prefer")
+        request.httpBody = try JSONEncoder.supabase.encode(body)
+        _ = try await send(request)
+    }
+
     /// `DELETE /rest/v1/<table>?<filters>`. Always pass a filter: PostgREST
     /// refuses an unfiltered delete, and RLS limits it to the caller's rows.
     func delete(_ table: String, query: [URLQueryItem]) async throws {
@@ -189,6 +203,7 @@ nonisolated struct SupabaseClient: Sendable {
 
         if code == "23505" { return .duplicate }
         if code == "42501" { return .forbidden }
+        if code == "23514" { return .contentRejected }
 
         switch status {
         case 401: return .unauthorized
