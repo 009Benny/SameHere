@@ -97,29 +97,35 @@ class HomeViewModel: ObservableObject {
         removeFromStack(thought)
     }
 
-    public func answerItem(_ thought:Thought, option: UUID){
-        // Remove the card right away so the swipe animation isn't held up by
-        // the network; the vote is saved in the background.
-        removeFromStack(thought)
-
-        guard let repository, let currentUserID else { return }
-        Task {
-            do {
-                try await repository.vote(
-                    thoughtID: thought.id,
-                    optionID: option,
-                    userID: currentUserID
-                )
-            } catch SupabaseRequestError.duplicate {
-                // Already voted on this one — the unique constraint doing its
-                // job. Not worth an alert.
-            } catch {
-                errorMessage = "Your answer wasn't saved: \(error.localizedDescription)"
+    /// Saves the vote, then returns the thought's options with fresh counts
+    /// from the server — so the percentages shown afterwards include it.
+    /// Throws if the vote couldn't be saved; the caller shows the error and
+    /// lets the user try again.
+    public func answer(_ thought: Thought, option: UUID) async throws -> [OptionItem] {
+        guard let repository, let currentUserID else {
+            // Preview: no backend, so just count the vote locally.
+            return thought.options.map {
+                $0.id == option
+                    ? OptionItem(id: $0.id, title: $0.title, counter: $0.counter + 1)
+                    : $0
             }
         }
+
+        do {
+            try await repository.vote(
+                thoughtID: thought.id,
+                optionID: option,
+                userID: currentUserID
+            )
+        } catch SupabaseRequestError.duplicate {
+            // Already voted on this one — the unique constraint doing its job.
+            // The counts below already include that earlier vote.
+        }
+        return try await repository.fetchOptionResults(thoughtID: thought.id)
     }
 
-    private func removeFromStack(_ thought: Thought) {
+    /// Takes a card off the stack and tops it up when it runs low.
+    public func removeFromStack(_ thought: Thought) {
         thoughts.removeAll { $0.id == thought.id }
         if thoughts.count <= prefetchThreshold {
             Task { await loadMore() }

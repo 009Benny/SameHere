@@ -225,6 +225,13 @@ nonisolated struct ThoughtsRepository: Sendable {
         )
     }
 
+    /// Current vote counts for one thought, read from `option_results` so they
+    /// include every real vote — call it right after `vote(...)` to show
+    /// percentages that count the user's own answer.
+    func fetchOptionResults(thoughtID: UUID) async throws -> [OptionItem] {
+        try await fetchOptions(for: [thoughtID])[thoughtID] ?? []
+    }
+
     // MARK: - Options
 
     /// Vote counts for a set of thoughts, keyed by thought id and ordered by

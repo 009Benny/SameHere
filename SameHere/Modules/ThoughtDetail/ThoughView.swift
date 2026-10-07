@@ -12,14 +12,22 @@ struct ThoughView: View {
     let isFullScreen:Bool
     var isDetail:Bool
     var animation: Namespace.ID
-    var answerAction: ((UUID) -> ())?
+    /// Saves the vote for the given option and returns the options with fresh
+    /// counts (including that vote). Throws if the vote wasn't saved.
+    var answerAction: ((UUID) async throws -> [OptionItem])?
     var closeAction: (() -> ())?
     /// Off for cards stacked under the top one (see `viewGlassContainer`).
     var castsShadow: Bool = true
     @State private var selected: UUID? = nil
+    /// The option whose vote is being saved right now.
+    @State private var pending: UUID? = nil
+    /// Counts returned after voting. Until then, the ones the card came with.
+    @State private var results: [OptionItem]? = nil
+    @State private var voteError: String? = nil
     
     var body: some View {
-        let total = thought.getTotal()
+        let options = results ?? thought.options
+        let total = options.reduce(0) { $0 + $1.counter }
         ZStack{
             if isFullScreen {
                 BackgroundView()
@@ -59,22 +67,47 @@ struct ThoughView: View {
                 
                 if isFullScreen {
                     Spacer()
-                    ForEach(thought.options) { option in
+                    ForEach(options) { option in
                         OptionRowView(
                             option: option,
                             total: total,
                             selected: selected,
-                            showPercentages: isDetail
+                            showPercentages: isDetail,
+                            isPending: pending == option.id
                         ) {
-                            answerAction?(option.id)
-                            selected = option.id
+                            Task { await vote(for: option.id) }
                         }
+                    }
+                    if let voteError {
+                        Text(voteError)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                            .multilineTextAlignment(.center)
+                            .padding(.top, 8)
                     }
                     Spacer()
                 }
             }
             .padding(20)
         }
+    }
+
+    /// Saves the vote first and only then reveals the percentages, computed
+    /// from the server's counts so they include this vote.
+    private func vote(for optionID: UUID) async {
+        guard let answerAction, selected == nil, pending == nil else { return }
+        pending = optionID
+        voteError = nil
+        do {
+            let fresh = try await answerAction(optionID)
+            withAnimation(.spring(response: 0.5, dampingFraction: 0.8)) {
+                results = fresh
+                selected = optionID
+            }
+        } catch {
+            voteError = "Your answer wasn't saved: \(error.localizedDescription)"
+        }
+        pending = nil
     }
 }
 

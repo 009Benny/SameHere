@@ -30,7 +30,7 @@ struct HomeView: View {
                 // stack up into a dark frame.
                 ForEach(viewModel.thoughts.suffix(visibleCardCount)) { thought in
                     SwipeCardView(
-                        content: ItemView(
+                        content: StackCard(
                             thought: thought,
                             castsShadow: thought.id == viewModel.thoughts.last?.id
                         ),
@@ -66,6 +66,12 @@ struct HomeView: View {
 
                 if let selected = selectedTought {
                     ItemView(thought: selected, isFullScreen: true)
+                        // A fresh view (and fresh vote state) per thought. Without
+                        // this, opening another thought while the previous one was
+                        // still animating closed reused the old view — keeping its
+                        // chosen option, which locked every option of the new one.
+                        .id(selected.id)
+                        .zIndex(1)
                 }
                 
             }
@@ -83,6 +89,21 @@ struct HomeView: View {
         }
     }
     
+    /// A card in the stack. While that thought is open full screen, its slot
+    /// is left empty: both views use the same `matchedGeometryEffect` id, and
+    /// with two of them on screen SwiftUI mixes their frames and the card
+    /// comes out stretched. One at a time, the card animates open and closed.
+    @ViewBuilder
+    func StackCard(thought: Thought, castsShadow: Bool) -> some View {
+        if selectedTought?.id == thought.id {
+            Color.clear
+                .frame(height: 300)
+                .padding(20)
+        } else {
+            ItemView(thought: thought, castsShadow: castsShadow)
+        }
+    }
+
     @ViewBuilder
     func ItemView(
         thought: Thought,
@@ -95,12 +116,18 @@ struct HomeView: View {
             isDetail: false,
             animation: animation,
             answerAction: { optionSelected in
+                // Vote first; only once it is saved does the card leave the
+                // stack and the detail show the new percentages.
+                let results = try await viewModel.answer(thought, option: optionSelected)
                 withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                    viewModel.answerItem(thought, option: optionSelected)
+                    viewModel.removeFromStack(thought)
                 }
+                return results
             },
             closeAction: {
-                withAnimation(.spring(response: 0.2, dampingFraction: 0.3)) {
+                // Same spring as opening, so the card settles back in place
+                // instead of bouncing past it.
+                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                     selectedTought = nil
                 }
             },

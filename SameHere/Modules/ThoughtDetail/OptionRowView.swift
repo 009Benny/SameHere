@@ -12,6 +12,8 @@ struct OptionRowView: View {
     let total: Int
     let selected: UUID?
     let showPercentages: Bool
+    /// The vote for this option is being saved.
+    var isPending: Bool = false
     
     let callback: ()->()
     
@@ -19,9 +21,15 @@ struct OptionRowView: View {
     var body: some View {
         Button(action: callback) {
             HStack(alignment: .center, spacing: 5) {
-                Image(systemName: isSelected() ? "circle.fill" : "circle")
-                    .foregroundColor(isSelected() ? .blue : .gray)
-                    .padding(.horizontal, 10)
+                Group {
+                    if isPending {
+                        ProgressView()
+                    } else {
+                        Image(systemName: isSelected() ? "circle.fill" : "circle")
+                            .foregroundColor(isSelected() ? .blue : .gray)
+                    }
+                }
+                .padding(.horizontal, 10)
                 
                 Text(option.title)
                     .foregroundStyle(.primary)
