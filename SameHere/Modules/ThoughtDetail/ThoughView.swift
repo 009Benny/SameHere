@@ -63,6 +63,10 @@ struct ThoughView: View {
                         .font(.headline)
                         .padding(10)
                 }
+                .overlay(alignment: .bottomTrailing) {
+                    originBadge
+                        .padding(14)
+                }
                 
                 
                 if isFullScreen {
@@ -89,6 +93,32 @@ struct ThoughView: View {
                 }
             }
             .padding(20)
+        }
+    }
+
+    /// Bottom-right corner of the card: where the question comes from.
+    /// Seeded questions have a source (a clip, or a "View source" link once the
+    /// card is open); questions written in the app show a person.
+    @ViewBuilder
+    private var originBadge: some View {
+        if let url = thought.sourceURL {
+            if isFullScreen {
+                Link(destination: url) {
+                    Label("View source", systemImage: "paperclip")
+                        .font(.footnote.weight(.semibold))
+                        .underline()
+                }
+            } else {
+                Image(systemName: "paperclip")
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .accessibilityLabel("Has a source")
+            }
+        } else {
+            Image(systemName: "person.fill")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .accessibilityLabel("Written by a community member")
         }
     }
 

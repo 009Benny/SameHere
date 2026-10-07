@@ -22,6 +22,8 @@ nonisolated struct ThoughtDTO: Decodable, Sendable {
     let createdAt: String?
     let authorId: UUID?
     let isAiGenerated: Bool?
+    /// Where a seeded question came from. `nil` for thoughts written in the app.
+    let sourceLink: String?
     /// Embedded via the `author_id → profiles.id` foreign key.
     let profiles: ProfileDTO?
 }
@@ -100,7 +102,8 @@ extension ThoughtDTO {
             user: profiles?.user ?? .seeded(id: id),
             message: message,
             options: options,
-            topic: topic
+            topic: topic,
+            sourceURL: sourceLink.flatMap { URL(string: $0) }
         )
     }
 }

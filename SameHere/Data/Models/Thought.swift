@@ -13,6 +13,9 @@ struct Thought: Identifiable, Hashable {
     let message: String
     let options: [OptionItem]
     let topic:String
+    /// The source a seeded question links to. `nil` means a community member
+    /// wrote it in the app — the UI shows a person icon instead of a clip.
+    var sourceURL: URL? = nil
     
     func getTotal() -> Int{
         options.reduce(0, {$0 + $1.counter})

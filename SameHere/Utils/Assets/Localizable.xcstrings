@@ -220,6 +220,16 @@
         }
       }
     },
+    "Has a source" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiene fuente"
+          }
+        }
+      }
+    },
     "Home" : {
       "localizations" : {
         "es-419" : {
@@ -480,12 +490,32 @@
         }
       }
     },
+    "View source" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ver fuente"
+          }
+        }
+      }
+    },
     "Work" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trabajo"
+          }
+        }
+      }
+    },
+    "Written by a community member" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Escrito por alguien de la comunidad"
           }
         }
       }
