@@ -1,0 +1,24 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSFaceIDUsageDescription" : {
+      "comment" : "Shown by iOS the first time the app asks to use Face ID.",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Same Here uses Face ID so you can sign in quickly and securely without typing your password."
+          }
+        },
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Same Here usa Face ID para que inicies sesión de forma rápida y segura sin escribir tu contraseña."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.3"
+}
