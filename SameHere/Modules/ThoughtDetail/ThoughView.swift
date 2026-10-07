@@ -105,7 +105,7 @@ struct ThoughView: View {
                 selected = optionID
             }
         } catch {
-            voteError = "Your answer wasn't saved: \(error.localizedDescription)"
+            voteError = String(localized: "Your answer wasn't saved: \(error.localizedDescription)")
         }
         pending = nil
     }

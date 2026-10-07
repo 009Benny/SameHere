@@ -23,17 +23,17 @@ nonisolated enum SupabaseRequestError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .offline:
-            return "You appear to be offline. Check your connection and try again."
+            return String(localized: "You appear to be offline. Check your connection and try again.")
         case .unauthorized:
-            return "Your session expired. Please sign in again."
+            return String(localized: "Your session expired. Please sign in again.")
         case .duplicate:
-            return "You already answered this one."
+            return String(localized: "You already answered this one.")
         case .forbidden:
-            return "You don't have permission to do that."
+            return String(localized: "You don't have permission to do that.")
         case .server(_, let message):
             return message
         case .decoding:
-            return "The server sent something unexpected."
+            return String(localized: "The server sent something unexpected.")
         }
     }
 }

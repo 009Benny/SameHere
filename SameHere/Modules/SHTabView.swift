@@ -13,7 +13,7 @@ struct SHTabView: View {
             Tab("Home", systemImage: "house"){
                 HomeView()
             }
-            Tab("My Toughts", systemImage: "person.bubble"){
+            Tab("My Thoughts", systemImage: "person.bubble"){
                 MyThoughtsView()
             }
         }

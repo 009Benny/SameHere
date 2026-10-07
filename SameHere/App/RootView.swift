@@ -37,7 +37,7 @@ struct RootView: View {
                     title: "Can't reach Same Here",
                     // Said plainly, because the alarming reading of this screen is
                     // "my account is gone" — and it isn't.
-                    message: "\(message)\n\nYour account is still on this device. It'll come back as soon as you're connected.",
+                    message: message + "\n\n" + String(localized: "Your account is still on this device. It'll come back as soon as you're connected."),
                     actionTitle: "Try again",
                     secondaryActionTitle: "Sign in instead"
                 ) {
@@ -97,10 +97,11 @@ struct LaunchView: View {
 /// launch with no network.
 struct StatusView: View {
     let symbol: String
-    let title: String
+    // Keys, so the fixed titles are translated; `message` is built at runtime.
+    let title: LocalizedStringKey
     let message: String
-    let actionTitle: String
-    var secondaryActionTitle: String?
+    let actionTitle: LocalizedStringKey
+    var secondaryActionTitle: LocalizedStringKey?
     let action: () async -> Void
     var secondaryAction: (() -> Void)?
 

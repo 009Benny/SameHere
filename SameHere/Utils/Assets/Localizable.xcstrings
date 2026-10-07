@@ -1,0 +1,585 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "%.2f%%" : {
+      "shouldTranslate" : false
+    },
+    "%lld thoughts at risk" : {
+      "localizations" : {
+        "en" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld thought at risk"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld thoughts at risk"
+                }
+              }
+            }
+          }
+        },
+        "es-419" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pensamiento en riesgo"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld pensamientos en riesgo"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "+" : {
+      "shouldTranslate" : false
+    },
+    "..." : {
+      "shouldTranslate" : false
+    },
+    "A guest account has no email or password, so there's no way back into it. Your thoughts and answers would be gone for good." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Una cuenta de invitado no tiene correo ni contraseña, así que no hay forma de volver a entrar. Tus pensamientos y respuestas se perderían para siempre."
+          }
+        }
+      }
+    },
+    "Add option" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Agregar opción"
+          }
+        }
+      }
+    },
+    "Between %lld and %lld options." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entre %lld y %lld opciones."
+          }
+        }
+      }
+    },
+    "Can't reach Same Here" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se puede conectar con Same Here"
+          }
+        }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
+    "Check back later for new thoughts." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vuelve más tarde para ver nuevos pensamientos."
+          }
+        }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar"
+          }
+        }
+      }
+    },
+    "Couldn't load thoughts" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudieron cargar los pensamientos"
+          }
+        }
+      }
+    },
+    "Couldn't load your ideas" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudieron cargar tus ideas"
+          }
+        }
+      }
+    },
+    "Couldn't save your thought: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo guardar tu pensamiento: %@"
+          }
+        }
+      }
+    },
+    "Create a thought" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crear un pensamiento"
+          }
+        }
+      }
+    },
+    "Dismiss" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descartar"
+          }
+        }
+      }
+    },
+    "Entertainment" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entretenimiento"
+          }
+        }
+      }
+    },
+    "Food" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comida"
+          }
+        }
+      }
+    },
+    "General" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "General"
+          }
+        }
+      }
+    },
+    "Guest" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Invitado"
+          }
+        }
+      }
+    },
+    "Guest account" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuenta de invitado"
+          }
+        }
+      }
+    },
+    "Home" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicio"
+          }
+        }
+      }
+    },
+    "My Thoughts" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis pensamientos"
+          }
+        }
+      }
+    },
+    "My own ideas" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis ideas"
+          }
+        }
+      }
+    },
+    "No ideas yet" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no tienes ideas"
+          }
+        }
+      }
+    },
+    "Not configured yet" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no está configurada"
+          }
+        }
+      }
+    },
+    "Options" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opciones"
+          }
+        }
+      }
+    },
+    "Relationships" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Relaciones"
+          }
+        }
+      }
+    },
+    "Reload" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recargar"
+          }
+        }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar"
+          }
+        }
+      }
+    },
+    "Save my account" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guardar mi cuenta"
+          }
+        }
+      }
+    },
+    "Save my account instead" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mejor guardar mi cuenta"
+          }
+        }
+      }
+    },
+    "Sign in instead" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sesión"
+          }
+        }
+      }
+    },
+    "Sign out" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar sesión"
+          }
+        }
+      }
+    },
+    "Sign out and delete this guest account?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión y borrar esta cuenta de invitado?"
+          }
+        }
+      }
+    },
+    "Sign out and forget Face ID" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar sesión y olvidar Face ID"
+          }
+        }
+      }
+    },
+    "Sign out and lose everything" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrar sesión y perder todo"
+          }
+        }
+      }
+    },
+    "Sign out?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión?"
+          }
+        }
+      }
+    },
+    "Sports" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deportes"
+          }
+        }
+      }
+    },
+    "Tap + to share your first thought." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toca + para compartir tu primer pensamiento."
+          }
+        }
+      }
+    },
+    "Technology" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tecnología"
+          }
+        }
+      }
+    },
+    "Tell us your thought" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cuéntanos qué piensas"
+          }
+        }
+      }
+    },
+    "The server sent something unexpected." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El servidor respondió algo inesperado."
+          }
+        }
+      }
+    },
+    "Thought" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pensamiento"
+          }
+        }
+      }
+    },
+    "Topic" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tema"
+          }
+        }
+      }
+    },
+    "Travel" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viajes"
+          }
+        }
+      }
+    },
+    "Try again" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reintentar"
+          }
+        }
+      }
+    },
+    "Work" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trabajo"
+          }
+        }
+      }
+    },
+    "You already answered this one." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ya respondiste esta pregunta."
+          }
+        }
+      }
+    },
+    "You appear to be offline. Check your connection and try again." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parece que no tienes conexión. Revísala e inténtalo de nuevo."
+          }
+        }
+      }
+    },
+    "You don't have permission to do that." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No tienes permiso para hacer eso."
+          }
+        }
+      }
+    },
+    "You're all caught up" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Estás al día"
+          }
+        }
+      }
+    },
+    "You're signed in as a guest, so everything lives only on this iPhone. Add an email and you'll keep it if you switch phones." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entraste como invitado, así que todo se guarda solo en este iPhone. Agrega un correo y lo conservarás si cambias de teléfono."
+          }
+        }
+      }
+    },
+    "Your account is still on this device. It'll come back as soon as you're connected." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cuenta sigue en este dispositivo. Volverá en cuanto tengas conexión."
+          }
+        }
+      }
+    },
+    "Your account isn't saved" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu cuenta no está guardada"
+          }
+        }
+      }
+    },
+    "Your answer wasn't saved: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se guardó tu respuesta: %@"
+          }
+        }
+      }
+    },
+    "Your session expired. Please sign in again." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tu sesión expiró. Vuelve a iniciar sesión."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.3"
+}

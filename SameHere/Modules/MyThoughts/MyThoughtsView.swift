@@ -100,7 +100,7 @@ struct MyThoughtsView : View {
 /// the Home cards so the text stays readable over the gradient background. Sized to its rows rather
 /// than stretched to the bottom of the screen like a `List` would be.
 private struct ThoughtsCard: View {
-    let title: String
+    let title: LocalizedStringKey
     let thoughts: [Thought]
     var isLoading: Bool = false
     var errorMessage: String? = nil
@@ -296,7 +296,7 @@ struct CreateThoughSheet: View {
             )
             dismiss()
         } catch {
-            saveError = "Couldn't save your thought: \(error.localizedDescription)"
+            saveError = String(localized: "Couldn't save your thought: \(error.localizedDescription)")
         }
         isSaving = false
     }

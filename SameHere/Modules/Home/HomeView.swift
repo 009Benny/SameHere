@@ -151,12 +151,24 @@ private struct FeedStatusView: View {
             } else {
                 Image(systemName: errorMessage == nil ? "checkmark.circle" : "wifi.exclamationmark")
                     .font(.system(size: 40))
-                Text(errorMessage == nil ? "You're all caught up" : "Couldn't load thoughts")
-                    .font(.headline)
-                Text(errorMessage ?? "Check back later for new thoughts.")
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(.secondary)
+                Group {
+                    if errorMessage == nil {
+                        Text("You're all caught up")
+                    } else {
+                        Text("Couldn't load thoughts")
+                    }
+                }
+                .font(.headline)
+                Group {
+                    if let errorMessage {
+                        Text(errorMessage)
+                    } else {
+                        Text("Check back later for new thoughts.")
+                    }
+                }
+                .font(.footnote)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.secondary)
                 Button("Reload") {
                     Task { await reload() }
                 }

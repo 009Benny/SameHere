@@ -65,9 +65,10 @@ struct GuestBanner: View {
 
     private var headline: String {
         switch thoughtCount {
-        case 0: "Your account isn't saved"
-        case 1: "1 thought at risk"
-        default: "\(thoughtCount) thoughts at risk"
+        case 0: String(localized: "Your account isn't saved")
+        // One key with plural variants in the string catalog ("1 thought" /
+        // "2 thoughts"), so each language gets its own plural rules.
+        default: String(localized: "\(thoughtCount) thoughts at risk")
         }
     }
 }

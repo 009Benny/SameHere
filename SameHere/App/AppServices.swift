@@ -82,7 +82,7 @@ final class AppServices {
               let id = UUID(uuidString: user.id) else { return nil }
         return User(
             id: id,
-            name: user.displayName ?? "Guest",
+            name: user.displayName ?? String(localized: "Guest"),
             email: user.email,
             isGuest: user.isAnonymous
         )
