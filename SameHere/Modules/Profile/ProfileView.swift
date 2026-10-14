@@ -157,7 +157,7 @@ struct ProfileView: View {
             }
             Divider()
                 .padding(.leading, 16)
-            Link(destination: AppLinks.supportEmail) {
+            Link(destination: AppLinks.support) {
                 actionRow("Contact support", systemImage: "envelope")
             }
         }

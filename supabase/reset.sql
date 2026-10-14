@@ -9,7 +9,7 @@
 --
 -- Then run, in this order:
 --   schema.sql -> auth_guests.sql -> grants.sql -> delete_account.sql
---   -> moderation.sql -> privacy.sql
+--   -> moderation.sql -> privacy.sql -> guest_restrictions.sql
 -- and re-seed with scripts/seed_thoughts.py.
 --
 -- Run it in the SQL Editor of the right project. Check the URL first.
@@ -43,6 +43,7 @@ drop function if exists public.delete_my_account()                  cascade;
 drop function if exists public.contains_banned_term(text)           cascade;
 drop function if exists public.reject_banned_terms()                cascade;
 drop function if exists public.hide_reported_thought()              cascade;
+drop function if exists public.is_saved_account()                   cascade;
 
 -- 4. Every user. Safe now: profiles (which referenced them) is gone.
 delete from auth.users;

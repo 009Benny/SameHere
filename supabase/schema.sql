@@ -12,7 +12,8 @@
 -- without them every API request fails with 42501 permission denied),
 -- then delete_account.sql (in-app account deletion), then moderation.sql
 -- (banned words, reports, blocks, community rules), then privacy.sql
--- (column-level limits so emails are never readable by other users).
+-- (column-level limits so emails are never readable by other users), then
+-- guest_restrictions.sql (guests can't post, report or block).
 -- ============================================================
 
 create extension if not exists "pgcrypto"; -- gen_random_uuid()

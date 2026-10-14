@@ -143,11 +143,9 @@ $$;
 revoke all on function public.purge_abandoned_guests(integer) from public, anon, authenticated;
 
 -- ------------------------------------------------------------
--- 6. Optional: keep guests from creating thoughts.
---
---    Same Here wants the opposite — a guest who can write is a guest worth
---    converting — so this is left commented out. Uncomment only if guest
---    content turns out to be a spam problem.
+-- 6. Keeping guests from creating thoughts — now done in
+--    guest_restrictions.sql (Oct 2026), together with reports and blocks.
+--    Leave this commented out; the sketch below is kept for history only.
 -- ------------------------------------------------------------
 -- drop policy if exists "Users can create their own thoughts" on public.thoughts;
 -- create policy "Saved accounts can create thoughts"
