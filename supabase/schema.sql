@@ -11,7 +11,8 @@
 -- After this file: auth_guests.sql, then grants.sql (table privileges —
 -- without them every API request fails with 42501 permission denied),
 -- then delete_account.sql (in-app account deletion), then moderation.sql
--- (banned words, reports, blocks, community rules).
+-- (banned words, reports, blocks, community rules), then privacy.sql
+-- (column-level limits so emails are never readable by other users).
 -- ============================================================
 
 create extension if not exists "pgcrypto"; -- gen_random_uuid()
@@ -163,9 +164,11 @@ create index if not exists answers_user_idx on public.answers (user_id);
 
 alter table public.answers enable row level security;
 
-create policy "Answers are publicly readable"
+-- Votes are private: only the owner can read their own rows. Totals come from
+-- the option_results view, which does not expose who voted.
+create policy "Users can read their own answers"
   on public.answers for select
-  using (true);
+  using (auth.uid() = user_id);
 
 create policy "Users can vote as themselves"
   on public.answers for insert

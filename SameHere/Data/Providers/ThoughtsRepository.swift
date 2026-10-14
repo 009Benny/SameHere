@@ -37,7 +37,7 @@ nonisolated struct ThoughtsRepository: Sendable {
                        excludingAnswered: Bool = true,
                        limit: Int = 50) async throws -> [Thought] {
         var query: [URLQueryItem] = [
-            .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,email)"),
+            .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,is_guest)"),
             .init(name: "order", value: "created_at.desc"),
             .init(name: "limit", value: String(limit))
         ]
@@ -96,7 +96,7 @@ nonisolated struct ThoughtsRepository: Sendable {
 
         for _ in 0..<5 {
             var query: [URLQueryItem] = [
-                .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,email)"),
+                .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,is_guest)"),
                 .init(name: "order", value: "created_at.desc,id.desc"),
                 .init(name: "limit", value: String(pageSize))
             ]
@@ -150,7 +150,7 @@ nonisolated struct ThoughtsRepository: Sendable {
     /// publicly readable — the policy would not narrow this for us.
     func fetchMyThoughts(userID: UUID, limit: Int = 100) async throws -> [Thought] {
         let query: [URLQueryItem] = [
-            .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,email)"),
+            .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,is_guest)"),
             .init(name: "author_id", value: "eq.\(userID.uuidString.lowercased())"),
             .init(name: "order", value: "created_at.desc"),
             .init(name: "limit", value: String(limit))

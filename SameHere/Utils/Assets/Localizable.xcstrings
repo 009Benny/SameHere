@@ -50,12 +50,12 @@
     "..." : {
       "shouldTranslate" : false
     },
-    "A guest account has no email or password, so there's no way back into it. Your thoughts and answers would be gone for good." : {
+    "A guest account has no email or password, so you won't be able to get back into it. Your thoughts and answers stay in Same Here, but you won't be able to see or delete them." : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Una cuenta de invitado no tiene correo ni contraseña, así que no hay forma de volver a entrar. Tus pensamientos y respuestas se perderían para siempre."
+            "value" : "Una cuenta de invitado no tiene correo ni contraseña, así que no podrás volver a entrar. Tus pensamientos y respuestas se quedan en Same Here, pero ya no podrás verlos ni borrarlos."
           }
         }
       }
@@ -570,12 +570,12 @@
         }
       }
     },
-    "Sign out and delete this guest account?" : {
+    "Sign out of this guest account?" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Cerrar sesión y borrar esta cuenta de invitado?"
+            "value" : "¿Cerrar sesión de esta cuenta de invitado?"
           }
         }
       }
@@ -590,12 +590,12 @@
         }
       }
     },
-    "Sign out and lose everything" : {
+    "Sign out anyway" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Cerrar sesión y perder todo"
+            "value" : "Cerrar sesión de todos modos"
           }
         }
       }

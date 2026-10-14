@@ -28,7 +28,13 @@ alter default privileges in schema public grant all on sequences to service_role
 -- App users (registered and guests). Mirrors the policies in schema.sql.
 grant usage on schema public to authenticated;
 
-grant select, insert, update         on public.profiles to authenticated;
+-- profiles is column-limited on purpose (see privacy.sql): other people's
+-- emails must never be readable through the API.
+grant insert on public.profiles to authenticated;
+-- (terms_accepted_at doesn't exist yet at this point in the run order;
+-- privacy.sql grants it once moderation.sql has created it.)
+grant select (id, name, is_guest, created_at) on public.profiles to authenticated;
+grant update (name) on public.profiles to authenticated;
 grant select, insert, update, delete on public.thoughts to authenticated;
 grant select, insert, update, delete on public.options  to authenticated;
 grant select, insert, delete         on public.answers  to authenticated;

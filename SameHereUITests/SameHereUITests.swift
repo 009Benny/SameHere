@@ -28,9 +28,12 @@ final class SameHereUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
+        // Whatever the auth state (signed out, guest, signed in), the app must
+        // come up and show something instead of crashing or sitting on a blank screen.
+        XCTAssertEqual(app.state, .runningForeground)
+        let anyContent = app.buttons.firstMatch.waitForExistence(timeout: 15)
+            || app.staticTexts.firstMatch.waitForExistence(timeout: 1)
+        XCTAssertTrue(anyContent, "The app launched but showed no UI.")
     }
 
     @MainActor

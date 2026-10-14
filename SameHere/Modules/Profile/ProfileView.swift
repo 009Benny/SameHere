@@ -10,9 +10,12 @@ import SwiftUI
 /// account, sign out, and delete the account.
 ///
 /// Sign-out is guarded rather than immediate. For a saved account it is a normal
-/// destructive action; for a **guest** it destroys the account outright — there
-/// are no credentials to come back with — so it asks first, and offers the
-/// alternative in the same breath. Deleting the account always asks first.
+/// destructive action; for a **guest** there are no credentials to come back
+/// with, so it asks first and offers to save the account instead. Signing a
+/// guest out does NOT delete their data: their thoughts and votes stay on the
+/// server, and the votes keep counting (anonymously) in the results. Deleting
+/// the account is the separate, explicit way to erase everything; it always
+/// asks first.
 struct ProfileView: View {
     @Environment(AppServices.self) private var services: AppServices?
     @Environment(AppCoordinator.self) private var coordinator: AppCoordinator?
@@ -55,17 +58,20 @@ struct ProfileView: View {
                 }
             }
             .confirmationDialog(
-                "Sign out and delete this guest account?",
+                "Sign out of this guest account?",
                 isPresented: $isConfirmingGuestSignOut,
                 titleVisibility: .visible
             ) {
                 Button("Save my account instead") { isShowingUpgrade = true }
-                Button("Sign out and lose everything", role: .destructive) {
+                Button("Sign out anyway", role: .destructive) {
+                    // Only signs out. The guest's thoughts and votes stay on the
+                    // server (votes count anonymously in the results); use
+                    // "Delete account" to erase them.
                     Task { await coordinator?.signOut() }
                 }
                 Button("Cancel", role: .cancel) { }
             } message: {
-                Text("A guest account has no email or password, so there's no way back into it. Your thoughts and answers would be gone for good.")
+                Text("A guest account has no email or password, so you won't be able to get back into it. Your thoughts and answers stay in Same Here, but you won't be able to see or delete them.")
             }
             .confirmationDialog(
                 "Sign out?",
