@@ -300,6 +300,17 @@
         }
       }
     },
+    "Guests can read and vote. To share your own thought, sign in or create an account." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Como invitado puedes leer y votar. Para compartir tu propio pensamiento, inicia sesión o crea una cuenta."
+          }
+        }
+      }
+    },
     "Harassment or bullying" : {
       "localizations" : {
         "es-419" : {
@@ -550,6 +561,17 @@
         }
       }
     },
+    "Sign in" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar sesión"
+          }
+        }
+      }
+    },
     "Sign in instead" : {
       "localizations" : {
         "es-419" : {
@@ -560,22 +582,23 @@
         }
       }
     },
+    "Sign in to continue" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia sesión para continuar"
+          }
+        }
+      }
+    },
     "Sign out" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerrar sesión"
-          }
-        }
-      }
-    },
-    "Sign out of this guest account?" : {
-      "localizations" : {
-        "es-419" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "¿Cerrar sesión de esta cuenta de invitado?"
           }
         }
       }
@@ -596,6 +619,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerrar sesión de todos modos"
+          }
+        }
+      }
+    },
+    "Sign out of this guest account?" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Cerrar sesión de esta cuenta de invitado?"
           }
         }
       }
@@ -736,6 +769,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pensamiento"
+          }
+        }
+      }
+    },
+    "To block someone, sign in or create an account." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para bloquear a alguien, inicia sesión o crea una cuenta."
+          }
+        }
+      }
+    },
+    "To report a thought, sign in or create an account. This keeps reports from being abused." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Para reportar un pensamiento, inicia sesión o crea una cuenta. Así evitamos que se abuse de los reportes."
           }
         }
       }

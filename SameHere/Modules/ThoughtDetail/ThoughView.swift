@@ -22,6 +22,10 @@ struct ThoughView: View {
     var reportAction: ((ReportReason) async throws -> Void)? = nil
     /// Blocks the thought's author. Only offered for thoughts that have one.
     var blockAction: (() async throws -> Void)? = nil
+    /// Optional so previews work outside the auth gate.
+    @Environment(AppServices.self) private var services: AppServices?
+    /// Set when a guest tries to report or block; shows the sign-in alert.
+    @State private var signInGate: GuestRestrictedAction? = nil
     @State private var isChoosingReportReason = false
     @State private var isConfirmingBlock = false
     @State private var moderationError: String? = nil
@@ -104,19 +108,28 @@ struct ThoughView: View {
             }
             .padding(20)
         }
+        .guestSignInGate($signInGate)
     }
 
     /// Report / block, top-left of the open card.
     private var moderationMenu: some View {
         Menu {
             Button {
-                isChoosingReportReason = true
+                if services?.isGuest == true {
+                    signInGate = .report
+                } else {
+                    isChoosingReportReason = true
+                }
             } label: {
                 Label("Report thought", systemImage: "flag")
             }
             if blockAction != nil, thought.authorID != nil {
                 Button(role: .destructive) {
-                    isConfirmingBlock = true
+                    if services?.isGuest == true {
+                        signInGate = .block
+                    } else {
+                        isConfirmingBlock = true
+                    }
                 } label: {
                     Label("Block this person", systemImage: "hand.raised")
                 }

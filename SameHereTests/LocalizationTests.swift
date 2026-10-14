@@ -26,7 +26,11 @@ struct LocalizationTests {
         "You appear to be offline. Check your connection and try again.",
         "Your session expired. Please sign in again.",
         "You already answered this one.",
-        "You don't have permission to do that."
+        "You don't have permission to do that.",
+        "Sign in to continue", "Sign in",
+        "Guests can read and vote. To share your own thought, sign in or create an account.",
+        "To report a thought, sign in or create an account. This keeps reports from being abused.",
+        "To block someone, sign in or create an account."
     ])
     func keyIsTranslatedToSpanish(key: String) throws {
         let bundle = try #require(spanish)

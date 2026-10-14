@@ -18,6 +18,7 @@ struct MyThoughtsView : View {
     @Environment(AppServices.self) private var services: AppServices?
     @State private var isShowingUpgrade = false
     @State private var hasDismissedGuestBanner = false
+    @State private var signInGate: GuestRestrictedAction? = nil
     
     var body: some View {
         NavigationStack {
@@ -71,7 +72,12 @@ struct MyThoughtsView : View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button("+", action: {
-                            showCreateSheet = true
+                            // Guests can read and vote, not post.
+                            if services?.isGuest == true {
+                                signInGate = .createThought
+                            } else {
+                                showCreateSheet = true
+                            }
                         })
                     }
                 }
@@ -83,6 +89,7 @@ struct MyThoughtsView : View {
                         UpgradeAccountSheet(auth: services.auth)
                     }
                 }
+                .guestSignInGate($signInGate)
             }
         }
         .task {

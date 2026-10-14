@@ -65,6 +65,12 @@ struct RootView: View {
                     SHTabView()
                         .environment(services)
                         .environment(coordinator)
+                        // A fresh tab tree per account. The view models capture
+                        // the user id when they are configured, so a guest who
+                        // logs in to an existing account from SignInSheet would
+                        // otherwise keep voting and reporting as the guest.
+                        // Upgrading a guest keeps the id, so that doesn't rebuild.
+                        .id(services.currentUser?.id)
                 }
             }
         }
