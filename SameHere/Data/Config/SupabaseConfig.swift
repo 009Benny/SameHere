@@ -70,9 +70,12 @@ nonisolated enum SupabaseConfig {
         return SupabaseAuthConfiguration(
             projectURL: url,
             anonKey: anonKey,
-            // Add a redirect here once there is a deep link for password recovery,
-            // and list the same URL under Authentication → URL Configuration.
-            redirectURL: nil
+            redirectURL: nil,
+            // The link in the reset-password email opens this page, where the
+            // user picks a new password (web/reset-password/index.html). It
+            // must also be listed under Authentication → URL Configuration →
+            // Redirect URLs, or Supabase falls back to the Site URL.
+            passwordRecoveryURL: AppLinks.passwordReset
         )
     }
 
