@@ -38,8 +38,14 @@ struct OptionRowView: View {
                 Spacer()
                 
                 if showPercentages || selected != nil {
-                    Text("\(getPercentage(), specifier: "%.2f")%")
-                        .padding(.horizontal, 20)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        Text("\(getPercentage(), specifier: "%.2f")%")
+                        Text("\(option.counter) votes")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                            .contentTransition(.numericText())
+                    }
+                    .padding(.horizontal, 20)
                 }
                 
             }

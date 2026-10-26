@@ -81,6 +81,10 @@ struct ThoughView: View {
                     originBadge
                         .padding(14)
                 }
+                .overlay(alignment: .bottomLeading) {
+                    totalVotesBadge(total)
+                        .padding(14)
+                }
                 
                 
                 if isFullScreen {
@@ -180,6 +184,15 @@ struct ThoughView: View {
         } catch {
             moderationError = String(localized: "That didn't go through: \(error.localizedDescription)")
         }
+    }
+
+    /// Bottom-left corner of the card: how many people have answered.
+    /// Updates with the server's counts after the user votes.
+    private func totalVotesBadge(_ total: Int) -> some View {
+        Label("\(total) votes", systemImage: "person.2.fill")
+            .font(.footnote.weight(.semibold))
+            .foregroundStyle(.secondary)
+            .contentTransition(.numericText())
     }
 
     /// Bottom-right corner of the card: where the question comes from.
