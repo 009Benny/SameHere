@@ -110,6 +110,16 @@
         }
       }
     },
+    "Answer questions in Home and they'll show up here." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responde preguntas en Inicio y aparecerán aquí."
+          }
+        }
+      }
+    },
     "Between %lld and %lld options." : {
       "localizations" : {
         "es-419" : {
@@ -190,6 +200,16 @@
         }
       }
     },
+    "Collapsed" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contraída"
+          }
+        }
+      }
+    },
     "Community rules" : {
       "localizations" : {
         "es-419" : {
@@ -236,6 +256,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se pudieron cargar tus ideas"
+          }
+        }
+      }
+    },
+    "Couldn't load your votes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudieron cargar tus votos"
           }
         }
       }
@@ -296,6 +326,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entretenimiento"
+          }
+        }
+      }
+    },
+    "Expanded" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expandida"
           }
         }
       }
@@ -421,6 +461,16 @@
         }
       }
     },
+    "My votes" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mis votos"
+          }
+        }
+      }
+    },
     "No hate, harassment or bullying." : {
       "localizations" : {
         "es-419" : {
@@ -457,6 +507,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nada de spam ni publicidad."
+          }
+        }
+      }
+    },
+    "No votes yet" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aún no has votado"
           }
         }
       }
@@ -931,6 +991,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No tienes permiso para hacer eso."
+          }
+        }
+      }
+    },
+    "You voted: %@" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votaste: %@"
           }
         }
       }

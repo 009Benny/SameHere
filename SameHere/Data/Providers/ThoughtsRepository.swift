@@ -163,6 +163,46 @@ nonisolated struct ThoughtsRepository: Sendable {
         return rows.map { $0.thought(options: options[$0.id] ?? []) }
     }
 
+    /// Thoughts the signed-in user voted on, most recent vote first, each with
+    /// the option they picked in `myVoteOptionID`.
+    ///
+    /// Reads `answers` (RLS only returns the user's own rows; the `user_id`
+    /// filter is just belt and braces) because, unlike `my_answers`, it has
+    /// `created_at` to sort by. Thoughts hidden since by moderation don't come
+    /// back from `thoughts`, so their votes are skipped.
+    func fetchMyVotes(userID: UUID, limit: Int = 100) async throws -> [Thought] {
+        let answers: [MyAnswerDTO] = try await client.get(
+            "answers",
+            query: [
+                .init(name: "select", value: "thought_id,option_id"),
+                .init(name: "user_id", value: "eq.\(userID.uuidString.lowercased())"),
+                .init(name: "order", value: "created_at.desc"),
+                .init(name: "limit", value: String(limit))
+            ]
+        )
+        guard !answers.isEmpty else { return [] }
+
+        let thoughtIDs = answers.map(\.thoughtId)
+        let ids = thoughtIDs.map { $0.uuidString.lowercased() }.joined(separator: ",")
+        async let rowsRequest: [ThoughtDTO] = client.get(
+            "thoughts",
+            query: [
+                .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,is_guest)"),
+                .init(name: "id", value: "in.(\(ids))")
+            ]
+        )
+        async let optionsRequest = fetchOptions(for: thoughtIDs)
+        let (rows, options) = try await (rowsRequest, optionsRequest)
+
+        let rowsByID = Dictionary(rows.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        return answers.compactMap { answer in
+            guard let row = rowsByID[answer.thoughtId] else { return nil }
+            var thought = row.thought(options: options[row.id] ?? [])
+            thought.myVoteOptionID = answer.optionId
+            return thought
+        }
+    }
+
     /// Ids of the thoughts the signed-in user has already answered.
     ///
     /// Reads `my_answers`, which filters on `auth.uid()` server-side — so this

@@ -19,6 +19,9 @@ struct MyThoughtsView : View {
     @State private var isShowingUpgrade = false
     @State private var hasDismissedGuestBanner = false
     @State private var signInGate: GuestRestrictedAction? = nil
+    /// Which sections are open. Remembered between launches.
+    @AppStorage("myThoughts.isIdeasExpanded") private var isIdeasExpanded = true
+    @AppStorage("myThoughts.isVotesExpanded") private var isVotesExpanded = true
     
     var body: some View {
         NavigationStack {
@@ -36,15 +39,36 @@ struct MyThoughtsView : View {
                     }
 
                     ScrollView {
-                        ThoughtsCard(
-                            title: "My own ideas",
-                            thoughts: viewModel.thoughts,
-                            isLoading: viewModel.isLoading,
-                            errorMessage: viewModel.errorMessage,
-                            animation: animation
-                        )
+                        VStack(spacing: 16) {
+                            ThoughtsCard(
+                                title: "My own ideas",
+                                thoughts: viewModel.thoughts,
+                                isExpanded: $isIdeasExpanded,
+                                isLoading: viewModel.isLoading,
+                                errorMessage: viewModel.errorMessage,
+                                errorTitle: "Couldn't load your ideas",
+                                emptyTitle: "No ideas yet",
+                                emptyMessage: "Tap + to share your first thought.",
+                                animation: animation
+                            )
+                            ThoughtsCard(
+                                title: "My votes",
+                                thoughts: viewModel.votes,
+                                isExpanded: $isVotesExpanded,
+                                isLoading: viewModel.isLoadingVotes,
+                                errorMessage: viewModel.votesErrorMessage,
+                                errorTitle: "Couldn't load your votes",
+                                emptyTitle: "No votes yet",
+                                emptyMessage: "Answer questions in Home and they'll show up here.",
+                                animation: animation
+                            )
+                        }
                         .padding(.horizontal, 16)
                         .padding(.vertical, 12)
+                    }
+                    .refreshable {
+                        await viewModel.loadData()
+                        await viewModel.loadVotes()
                     }
                     
                 }
@@ -54,10 +78,13 @@ struct MyThoughtsView : View {
 //                .navigationTitle("My own ideas")
                 .toolbarTitleDisplayMode(.inline)
                 .navigationDestination(for: Thought.self, destination: { thought in
+                    // A voted thought shows the user's own pick (and can't be
+                    // changed: no `answerAction`); their own thoughts show
+                    // every result.
                     ThoughView(
                         thought: thought,
                         isFullScreen: true,
-                        isDetail: true,
+                        isDetail: thought.myVoteOptionID == nil,
                         animation: animation
                     )
                     // The system zoom transition, not matchedGeometryEffect:
@@ -100,57 +127,41 @@ struct MyThoughtsView : View {
             if viewModel.thoughts.isEmpty {
                 await viewModel.loadData()
             }
+            // Every time: the user may have just voted in Home.
+            await viewModel.loadVotes()
         }
     }
     
 }
 
-/// The title and the list of the user's thoughts, on a rounded card styled like
-/// the Home cards so the text stays readable over the gradient background. Sized to its rows rather
+/// A collapsible section of the tab: a title (tap it to fold the list away)
+/// and a list of thoughts, on a rounded card styled like the Home cards so the
+/// text stays readable over the gradient background. Sized to its rows rather
 /// than stretched to the bottom of the screen like a `List` would be.
 private struct ThoughtsCard: View {
     let title: LocalizedStringKey
     let thoughts: [Thought]
+    @Binding var isExpanded: Bool
     var isLoading: Bool = false
     var errorMessage: String? = nil
+    let errorTitle: LocalizedStringKey
+    let emptyTitle: LocalizedStringKey
+    let emptyMessage: LocalizedStringKey
     var animation: Namespace.ID
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(title)
-                .font(.largeTitle.bold())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
-                .padding(.top, 20)
-                .padding(.bottom, 8)
+            header
 
-            Divider()
-                .padding(.leading, 16)
+            if isExpanded {
+                Divider()
+                    .padding(.leading, 16)
 
-            if thoughts.isEmpty {
-                VStack(spacing: 6) {
-                    if isLoading {
-                        ProgressView()
-                    } else if let errorMessage {
-                        Text("Couldn't load your ideas")
-                            .font(.headline)
-                        Text(errorMessage)
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
-                            .foregroundStyle(.secondary)
-                    } else {
-                        Text("No ideas yet")
-                            .font(.headline)
-                        Text("Tap + to share your first thought.")
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
+                if thoughts.isEmpty {
+                    placeholder
+                } else {
+                    rows
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 32)
-                .padding(.horizontal, 16)
-            } else {
-                rows
             }
         }
         // Same surface as the Home cards (`viewGlassContainer`): the
@@ -162,15 +173,77 @@ private struct ThoughtsCard: View {
         .shadow(color: .black.opacity(0.1), radius: 16, x: 0, y: 2)
     }
 
+    private var header: some View {
+        Button {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+                isExpanded.toggle()
+            }
+        } label: {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(title)
+                    .font(.title.bold())
+                if !thoughts.isEmpty {
+                    Text(thoughts.count, format: .number)
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.down")
+                    .font(.headline.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .rotationEffect(.degrees(isExpanded ? 0 : -90))
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 20)
+            .padding(.bottom, isExpanded ? 8 : 20)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(.isHeader)
+        .accessibilityValue(isExpanded ? Text("Expanded") : Text("Collapsed"))
+    }
+
+    private var placeholder: some View {
+        VStack(spacing: 6) {
+            if isLoading {
+                ProgressView()
+            } else if let errorMessage {
+                Text(errorTitle)
+                    .font(.headline)
+                Text(errorMessage)
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.secondary)
+            } else {
+                Text(emptyTitle)
+                    .font(.headline)
+                Text(emptyMessage)
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 32)
+        .padding(.horizontal, 16)
+    }
+
     @ViewBuilder
     private var rows: some View {
         ForEach(thoughts) { thought in
             NavigationLink(value: thought) {
                 HStack(spacing: 12) {
-                    Text(thought.message)
-                        .font(.body)
-                        .multilineTextAlignment(.leading)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(thought.message)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                        if let pick = votedOptionTitle(in: thought) {
+                            Text("You voted: \(pick)")
+                                .font(.footnote)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     Image(systemName: "chevron.right")
                         .font(.footnote.weight(.semibold))
                         .foregroundStyle(.tertiary)
@@ -188,6 +261,11 @@ private struct ThoughtsCard: View {
                     .padding(.leading, 16)
             }
         }
+    }
+
+    private func votedOptionTitle(in thought: Thought) -> String? {
+        guard let id = thought.myVoteOptionID else { return nil }
+        return thought.options.first { $0.id == id }?.title
     }
 }
 

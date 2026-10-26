@@ -13,6 +13,11 @@ class MyThoughtsViewModel: ObservableObject {
     @Published private(set) var isLoading = false
     @Published var errorMessage: String? = nil
 
+    /// Thoughts the user voted on, most recent vote first ("My votes").
+    @Published var votes: [Thought] = []
+    @Published private(set) var isLoadingVotes = false
+    @Published var votesErrorMessage: String? = nil
+
     /// Set by `configure(...)` once the view can see `AppServices`.
     /// `nil` in SwiftUI previews, where the list falls back to `MockThoughs`.
     private var repository: ThoughtsRepository?
@@ -41,6 +46,30 @@ class MyThoughtsViewModel: ObservableObject {
             thoughts = try await repository.fetchMyThoughts(userID: currentUserID)
         } catch {
             errorMessage = error.localizedDescription
+        }
+    }
+
+    /// The thoughts the user voted on. Called every time the tab appears, so a
+    /// vote cast in Home shows up here right away.
+    func loadVotes() async {
+        guard let repository, let currentUserID else {
+            // Preview only: pretend the user picked the first option.
+            self.votes = MockThoughs.getMockData().map { thought in
+                var thought = thought
+                thought.myVoteOptionID = thought.options.first?.id
+                return thought
+            }
+            return
+        }
+
+        isLoadingVotes = true
+        votesErrorMessage = nil
+        defer { isLoadingVotes = false }
+
+        do {
+            votes = try await repository.fetchMyVotes(userID: currentUserID)
+        } catch {
+            votesErrorMessage = error.localizedDescription
         }
     }
 

@@ -93,7 +93,7 @@ struct ThoughView: View {
                         OptionRowView(
                             option: option,
                             total: total,
-                            selected: selected,
+                            selected: selected ?? thought.myVoteOptionID,
                             showPercentages: isDetail,
                             isPending: pending == option.id
                         ) {
@@ -224,7 +224,7 @@ struct ThoughView: View {
     /// Saves the vote first and only then reveals the percentages, computed
     /// from the server's counts so they include this vote.
     private func vote(for optionID: UUID) async {
-        guard let answerAction, selected == nil, pending == nil else { return }
+        guard let answerAction, selected == nil, thought.myVoteOptionID == nil, pending == nil else { return }
         pending = optionID
         voteError = nil
         do {

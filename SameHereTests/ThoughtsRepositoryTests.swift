@@ -151,6 +151,49 @@ struct ThoughtsRepositoryTests {
         #expect(try await ThoughtsRepository(client: server.makeClient()).fetchMyThoughts(userID: Fixture.userA).isEmpty)
     }
 
+    // MARK: - My votes
+
+    @Test func myVotesKeepVoteOrderAndCarryThePickedOption() async throws {
+        let server = StubServer()
+        // Most recent vote first: thought 2, then thought 1 (picked "No").
+        server.on("GET", "answers", json: """
+        [{"thought_id":"\(Fixture.id(2).uuidString.lowercased())","option_id":"\(Fixture.id(21).uuidString.lowercased())"},
+         {"thought_id":"\(Fixture.id(1).uuidString.lowercased())","option_id":"\(Fixture.id(12).uuidString.lowercased())"}]
+        """)
+        server.on("GET", "thoughts", json: Fixture.thoughtsJSON([1, 2]))
+        server.on("GET", "option_results", json: Fixture.optionsJSON(for: [1, 2]))
+
+        let votes = try await ThoughtsRepository(client: server.makeClient()).fetchMyVotes(userID: Fixture.userA)
+
+        #expect(votes.map(\.id) == [Fixture.id(2), Fixture.id(1)])
+        #expect(votes.map(\.myVoteOptionID) == [Fixture.id(21), Fixture.id(12)])
+        #expect(votes[1].options.map(\.counter) == [3, 1])
+        let request = try #require(server.requests("GET", "answers").first)
+        #expect(request.query["user_id"] == "eq.\(Fixture.userA.uuidString.lowercased())")
+        #expect(request.query["order"] == "created_at.desc")
+    }
+
+    @Test func myVotesSkipThoughtsThatAreGone() async throws {
+        let server = StubServer()
+        server.on("GET", "answers", json: """
+        [{"thought_id":"\(Fixture.id(1).uuidString.lowercased())","option_id":"\(Fixture.id(11).uuidString.lowercased())"},
+         {"thought_id":"\(Fixture.id(3).uuidString.lowercased())","option_id":"\(Fixture.id(31).uuidString.lowercased())"}]
+        """)
+        // Thought 3 was hidden by moderation, so it doesn't come back.
+        server.on("GET", "thoughts", json: Fixture.thoughtsJSON([1]))
+        server.on("GET", "option_results", json: Fixture.optionsJSON(for: [1]))
+
+        let votes = try await ThoughtsRepository(client: server.makeClient()).fetchMyVotes(userID: Fixture.userA)
+        #expect(votes.map(\.id) == [Fixture.id(1)])
+    }
+
+    @Test func noVotesMeansNoFurtherRequests() async throws {
+        let server = StubServer()
+        server.on("GET", "answers")
+        #expect(try await ThoughtsRepository(client: server.makeClient()).fetchMyVotes(userID: Fixture.userA).isEmpty)
+        #expect(server.requests("GET", "thoughts").isEmpty)
+    }
+
     // MARK: - Creating
 
     @Test func createThoughtInsertsTheThoughtThenItsOptionsInOrder() async throws {

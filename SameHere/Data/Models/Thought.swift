@@ -18,6 +18,9 @@ struct Thought: Identifiable, Hashable {
     var sourceURL: URL? = nil
     /// Who wrote it. `nil` for seeded questions — they have no author to block.
     var authorID: UUID? = nil
+    /// The option the signed-in user picked. Only set on thoughts loaded for
+    /// "My votes"; the detail then shows that vote and can't be changed.
+    var myVoteOptionID: UUID? = nil
     
     func getTotal() -> Int{
         options.reduce(0, {$0 + $1.counter})
