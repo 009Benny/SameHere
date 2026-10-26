@@ -203,6 +203,66 @@ nonisolated struct ThoughtsRepository: Sendable {
         }
     }
 
+    /// Thoughts whose text contains `text` (ignoring case), newest first.
+    ///
+    /// Same hiding rules as the feed — nothing the user reported, nothing by
+    /// people they blocked — but thoughts they answered or wrote are included.
+    /// Answered ones carry `myVoteOptionID`, so the detail shows the vote
+    /// instead of asking again.
+    func searchThoughts(matching text: String, limit: Int = 30) async throws -> [Thought] {
+        let term = Self.ilikeTerm(text)
+        guard !term.isEmpty else { return [] }
+
+        async let answersRequest = fetchMyAnswers()
+        async let reportedRequest = fetchReportedThoughtIDs()
+        async let blockedRequest = fetchBlockedUserIDs()
+        let (answers, reported, blocked) = try await (answersRequest, reportedRequest, blockedRequest)
+
+        var query: [URLQueryItem] = [
+            .init(name: "select", value: "id,message,topic,created_at,author_id,is_ai_generated,source_link,profiles(id,name,is_guest)"),
+            .init(name: "message", value: "ilike.*\(term)*"),
+            .init(name: "order", value: "created_at.desc,id.desc"),
+            .init(name: "limit", value: String(limit))
+        ]
+        if !blocked.isEmpty {
+            // Keep the seeded thoughts (NULL author) — see `fetchFeedPage`.
+            let ids = blocked.map { $0.uuidString.lowercased() }.sorted().joined(separator: ",")
+            query.append(.init(name: "or", value: "(author_id.is.null,author_id.not.in.(\(ids)))"))
+        }
+
+        let rows: [ThoughtDTO] = try await client.get("thoughts", query: query)
+        let visible = rows.filter { !reported.contains($0.id) }
+        guard !visible.isEmpty else { return [] }
+
+        let options = try await fetchOptions(for: visible.map(\.id))
+        return visible.map { row in
+            var thought = row.thought(options: options[row.id] ?? [])
+            thought.myVoteOptionID = answers[row.id]
+            return thought
+        }
+    }
+
+    /// The user's text as the body of an `ilike` pattern: trimmed, inner
+    /// whitespace collapsed, and the wildcard characters made literal — `*`
+    /// (PostgREST's wildcard) is dropped, `%`, `_` and `\` are escaped.
+    static func ilikeTerm(_ text: String) -> String {
+        text.split(whereSeparator: \.isWhitespace)
+            .joined(separator: " ")
+            .replacingOccurrences(of: "*", with: "")
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "%", with: "\\%")
+            .replacingOccurrences(of: "_", with: "\\_")
+    }
+
+    /// What the signed-in user voted, as thought id → option id.
+    private func fetchMyAnswers() async throws -> [UUID: UUID] {
+        let rows: [MyAnswerDTO] = try await client.get(
+            "my_answers",
+            query: [.init(name: "select", value: "thought_id,option_id")]
+        )
+        return Dictionary(rows.map { ($0.thoughtId, $0.optionId) }, uniquingKeysWith: { first, _ in first })
+    }
+
     /// Ids of the thoughts the signed-in user has already answered.
     ///
     /// Reads `my_answers`, which filters on `auth.uid()` server-side — so this

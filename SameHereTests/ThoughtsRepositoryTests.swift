@@ -194,6 +194,39 @@ struct ThoughtsRepositoryTests {
         #expect(server.requests("GET", "thoughts").isEmpty)
     }
 
+    // MARK: - Search
+
+    @Test func searchMatchesTextAndMarksWhatTheUserVoted() async throws {
+        let server = Fixture.feedServer(thoughts: [1, 2], answered: [Fixture.id(2)])
+        let found = try await ThoughtsRepository(client: server.makeClient()).searchThoughts(matching: "  pizza   night ")
+
+        #expect(found.map(\.id) == [Fixture.id(1), Fixture.id(2)])
+        #expect(found[0].myVoteOptionID == nil)
+        #expect(found[1].myVoteOptionID == Fixture.id(999))
+        let request = try #require(server.requests("GET", "thoughts").first)
+        #expect(request.query["message"] == "ilike.*pizza night*")
+        #expect(request.query["or"] == nil)
+    }
+
+    @Test func searchHidesReportedThoughtsAndBlockedAuthors() async throws {
+        let server = Fixture.feedServer(thoughts: [1, 2], reported: [Fixture.id(1)], blocked: [Fixture.userA])
+        let found = try await ThoughtsRepository(client: server.makeClient()).searchThoughts(matching: "question")
+
+        #expect(found.map(\.id) == [Fixture.id(2)])
+        let request = try #require(server.requests("GET", "thoughts").first)
+        #expect(request.query["or"] == "(author_id.is.null,author_id.not.in.(\(Fixture.userA.uuidString.lowercased())))")
+    }
+
+    @Test func blankSearchSendsNothing() async throws {
+        let server = StubServer()
+        #expect(try await ThoughtsRepository(client: server.makeClient()).searchThoughts(matching: " * ").isEmpty)
+        #expect(server.requests("GET", "thoughts").isEmpty)
+    }
+
+    @Test func searchTermMakesWildcardsLiteral() {
+        #expect(ThoughtsRepository.ilikeTerm("100% sure_*") == #"100\% sure\_"#)
+    }
+
     // MARK: - Creating
 
     @Test func createThoughtInsertsTheThoughtThenItsOptionsInOrder() async throws {

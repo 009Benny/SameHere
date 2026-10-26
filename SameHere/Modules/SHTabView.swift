@@ -23,6 +23,10 @@ struct SHTabView: View {
             Tab("Profile", systemImage: "person.crop.circle"){
                 ProfileView()
             }
+            // `.search` puts it in its own button at the end of the tab bar.
+            Tab("Search", systemImage: "magnifyingglass", role: .search){
+                SearchView()
+            }
         }
         .task {
             guard let services, let user = services.currentUser else { return }

@@ -44,20 +44,23 @@ struct ThoughView: View {
                 BackgroundView()
             }
             VStack {
-                if isFullScreen && closeAction != nil {
+                if isFullScreen && (closeAction != nil || reportAction != nil) {
                     HStack {
                         if reportAction != nil {
                             moderationMenu
                         }
                         Spacer()
-                        Button(action: {
-                            withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
-                                closeAction?()
+                        // Pushed cards (Search) have a back button instead.
+                        if closeAction != nil {
+                            Button(action: {
+                                withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
+                                    closeAction?()
+                                }
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title)
+                                    .foregroundColor(.white.opacity(0.7))
                             }
-                        }) {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.title)
-                                .foregroundColor(.white.opacity(0.7))
                         }
                     }
         

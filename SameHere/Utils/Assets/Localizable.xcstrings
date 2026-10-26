@@ -280,6 +280,16 @@
         }
       }
     },
+    "Couldn't search" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No se pudo buscar"
+          }
+        }
+      }
+    },
     "Create a thought" : {
       "localizations" : {
         "es-419" : {
@@ -336,6 +346,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Expandida"
+          }
+        }
+      }
+    },
+    "Find questions by what they say." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encuentra preguntas por lo que dicen."
           }
         }
       }
@@ -651,6 +671,26 @@
         }
       }
     },
+    "Search" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar"
+          }
+        }
+      }
+    },
+    "Search thoughts" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buscar pensamientos"
+          }
+        }
+      }
+    },
     "Sexual content" : {
       "localizations" : {
         "es-419" : {
@@ -935,6 +975,16 @@
         }
       }
     },
+    "Voted" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votaste"
+          }
+        }
+      }
+    },
     "Why are you reporting this thought?" : {
       "localizations" : {
         "es-419" : {
@@ -1084,6 +1134,19 @@
           }
         }
       }
+    },
+    "Yours" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tuyo"
+          }
+        }
+      }
+    },
+    "·" : {
+      "shouldTranslate" : false
     }
   },
   "version" : "1.3"
