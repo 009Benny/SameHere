@@ -300,6 +300,16 @@
         }
       }
     },
+    "Daily" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diario"
+          }
+        }
+      }
+    },
     "Delete account" : {
       "localizations" : {
         "es-419" : {
@@ -491,6 +501,16 @@
         }
       }
     },
+    "New questions" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preguntas nuevas"
+          }
+        }
+      }
+    },
     "No hate, harassment or bullying." : {
       "localizations" : {
         "es-419" : {
@@ -551,12 +571,42 @@
         }
       }
     },
+    "Notifications for Same Here are turned off in Settings." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Las notificaciones de Same Here están desactivadas en Ajustes."
+          }
+        }
+      }
+    },
+    "Off" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nunca"
+          }
+        }
+      }
+    },
     "Offensive or hateful" : {
       "localizations" : {
         "es-419" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ofensivo o de odio"
+          }
+        }
+      }
+    },
+    "Open Settings" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
           }
         }
       }
@@ -981,6 +1031,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Votaste"
+          }
+        }
+      }
+    },
+    "We'll let you know when there are new questions to vote on." : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Te avisaremos cuando haya preguntas nuevas para votar."
+          }
+        }
+      }
+    },
+    "Weekly" : {
+      "localizations" : {
+        "es-419" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Semanal"
           }
         }
       }

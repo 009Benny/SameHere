@@ -29,6 +29,13 @@ struct SHTabView: View {
             }
         }
         .task {
+            // Save (or move) this iPhone's push token for the signed-in account.
+            // SHTabView is rebuilt per account, so this runs on every switch.
+            if let services {
+                await PushNotifications.shared.attach(services.notifications)
+            }
+        }
+        .task {
             guard let services, let user = services.currentUser else { return }
             // If the check itself fails (offline), don't lock the person out;
             // they'll be asked again next launch.

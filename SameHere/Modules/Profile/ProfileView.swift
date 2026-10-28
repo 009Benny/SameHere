@@ -5,6 +5,7 @@
 
 import AuthFeature
 import SwiftUI
+import UIKit
 
 /// The Profile tab: who is signed in, and the account actions — save a guest
 /// account, sign out, and delete the account.
@@ -19,6 +20,10 @@ import SwiftUI
 struct ProfileView: View {
     @Environment(AppServices.self) private var services: AppServices?
     @Environment(AppCoordinator.self) private var coordinator: AppCoordinator?
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.openURL) private var openURL
+
+    private var push: PushNotifications { .shared }
 
     @State private var isShowingUpgrade = false
     @State private var isConfirmingGuestSignOut = false
@@ -37,6 +42,7 @@ struct ProfileView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         userCard
+                        notificationsCard
                         linksCard
                         actionsCard
 
@@ -52,6 +58,13 @@ struct ProfileView: View {
                 .disabled(isDeleting)
             }
             .navigationTitle("Profile")
+            // The permission may have changed in Settings.
+            .task { await push.refreshAuthorizationStatus() }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .active {
+                    Task { await push.refreshAuthorizationStatus() }
+                }
+            }
             .sheet(isPresented: $isShowingUpgrade) {
                 if let services {
                     UpgradeAccountSheet(auth: services.auth)
@@ -140,6 +153,54 @@ struct ProfileView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)
         .padding(.horizontal, 16)
+        .profileCard()
+    }
+
+    /// The "new questions" digest. Off until the user picks a frequency; the
+    /// first time, iOS asks for permission.
+    private var notificationsCard: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack {
+                Label("New questions", systemImage: "bell.badge")
+                Spacer()
+                Picker("New questions", selection: Binding(
+                    get: { push.frequency },
+                    set: { newValue in Task { await push.setFrequency(newValue) } }
+                )) {
+                    ForEach(DigestFrequency.allCases) { frequency in
+                        Text(frequency.title).tag(frequency)
+                    }
+                }
+                .pickerStyle(.menu)
+                .labelsHidden()
+            }
+            .padding(.leading, 16)
+            .padding(.trailing, 8)
+            .padding(.vertical, 8)
+
+            if push.isDeniedInSettings {
+                Text("Notifications for Same Here are turned off in Settings.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 16)
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        openURL(url)
+                    }
+                }
+                .font(.footnote.weight(.semibold))
+                .padding(.horizontal, 16)
+                .padding(.top, 6)
+                .padding(.bottom, 14)
+            } else {
+                Text("We'll let you know when there are new questions to vote on.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 14)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .profileCard()
     }
 

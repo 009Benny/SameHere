@@ -116,6 +116,14 @@ nonisolated struct SupabaseClient: Sendable {
         _ = try await send(request)
     }
 
+    /// `POST /rest/v1/rpc/<function>` with named arguments (the keys of
+    /// `params` must match the function's parameter names), returning nothing.
+    func rpc<Params: Encodable>(_ function: String, params: Params) async throws {
+        var request = try await makeRequest("rpc/\(function)", method: "POST")
+        request.httpBody = try JSONEncoder.supabase.encode(params)
+        _ = try await send(request)
+    }
+
     /// `PATCH /rest/v1/<table>?<filters>` — updates the matching rows.
     func update<Body: Encodable>(_ table: String,
                                  query: [URLQueryItem],

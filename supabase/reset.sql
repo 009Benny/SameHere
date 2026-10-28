@@ -10,12 +10,22 @@
 -- Then run, in this order:
 --   schema.sql -> auth_guests.sql -> grants.sql -> delete_account.sql
 --   -> moderation.sql -> privacy.sql -> guest_restrictions.sql
+--   -> push_notifications.sql (and push_schedule.sql once send-digest is deployed)
 -- and re-seed with scripts/seed_thoughts.py.
 --
 -- Run it in the SQL Editor of the right project. Check the URL first.
 -- ============================================================
 
 begin;
+
+-- 0. Scheduled digests (only if pg_cron is enabled and they exist).
+do $$
+begin
+  if exists (select 1 from pg_namespace where nspname = 'cron') then
+    perform cron.unschedule(jobname) from cron.job
+     where jobname in ('same-here-weekly-digest', 'same-here-daily-digest');
+  end if;
+end $$;
 
 -- 1. Triggers on Supabase's auth table (they live outside `public`, so
 --    dropping the tables below would not remove them).
@@ -27,6 +37,7 @@ drop trigger if exists on_auth_user_updated on auth.users;
 drop view  if exists public.my_answers      cascade;
 drop view  if exists public.option_results  cascade;
 
+drop table if exists public.device_tokens cascade;
 drop table if exists public.reports      cascade;
 drop table if exists public.blocks       cascade;
 drop table if exists public.answers      cascade;
@@ -44,6 +55,8 @@ drop function if exists public.contains_banned_term(text)           cascade;
 drop function if exists public.reject_banned_terms()                cascade;
 drop function if exists public.hide_reported_thought()              cascade;
 drop function if exists public.is_saved_account()                   cascade;
+drop function if exists public.register_device_token(text, text, text, text) cascade;
+drop function if exists public.new_thoughts_by_topic(timestamptz)   cascade;
 
 -- 4. Every user. Safe now: profiles (which referenced them) is gone.
 delete from auth.users;

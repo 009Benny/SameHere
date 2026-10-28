@@ -109,6 +109,9 @@ final class AppCoordinator {
     /// > Warning: For a guest this is irreversible — there is no password to come
     /// > back with. Every call site must confirm first; see `ProfileView`.
     func signOut(forgettingCredentials: Bool = false) async {
+        // While the session is still valid: stop this iPhone getting the
+        // account's digests.
+        await PushNotifications.shared.detach()
         await services?.auth.signOut(forgetBiometricCredentials: forgettingCredentials)
     }
 
@@ -119,6 +122,8 @@ final class AppCoordinator {
     func deleteAccount() async throws {
         guard let services else { return }
         try await services.account.deleteMyAccount()
+        // The token row went with the account.
+        await PushNotifications.shared.detach(removingToken: false)
         await services.auth.signOut(forgetBiometricCredentials: true)
     }
 }

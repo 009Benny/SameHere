@@ -30,7 +30,8 @@ struct LocalizationTests {
         "Sign in to continue", "Sign in",
         "Guests can read and vote. To share your own thought, sign in or create an account.",
         "To report a thought, sign in or create an account. This keeps reports from being abused.",
-        "To block someone, sign in or create an account."
+        "To block someone, sign in or create an account.",
+        "New questions", "Off", "Daily", "Weekly", "Open Settings"
     ])
     func keyIsTranslatedToSpanish(key: String) throws {
         let bundle = try #require(spanish)

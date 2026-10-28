@@ -42,6 +42,9 @@ final class AppServices {
     /// Account deletion and other account-level calls.
     let account: AccountRepository
 
+    /// This iPhone's push token on the server.
+    let notifications: NotificationsRepository
+
     init(configuration: SupabaseAuthConfiguration) {
         self.configuration = configuration
 
@@ -69,6 +72,7 @@ final class AppServices {
         self.client = client
         self.thoughts = ThoughtsRepository(client: client)
         self.account = AccountRepository(client: client)
+        self.notifications = NotificationsRepository(client: client)
     }
 
     // MARK: - Who is signed in
