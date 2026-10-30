@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		175184143048C3D50055F102 /* AuthFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 175184133048C3D50055F102 /* AuthFeature */; };
+		17B88E9B30954AC9002F9E67 /* AuthFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 17B88E9A30954AC9002F9E67 /* AuthFeature */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				175184143048C3D50055F102 /* AuthFeature in Frameworks */,
+				17B88E9B30954AC9002F9E67 /* AuthFeature in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +100,7 @@
 				172BA3C23020870800D9CCB0 /* SameHereUITests */,
 				17C12A43305C6E0000D873F4 /* Secrets.xcconfig */,
 				17C12A44305C6E0000D873F4 /* SecretsDev.xcconfig */,
+				17B88E9930954AC9002F9E67 /* Frameworks */,
 				172BA3A93020870700D9CCB0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +113,13 @@
 				172BA3BF3020870800D9CCB0 /* SameHereUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		17B88E9930954AC9002F9E67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -134,7 +142,7 @@
 			);
 			name = SameHere;
 			packageProductDependencies = (
-				175184133048C3D50055F102 /* AuthFeature */,
+				17B88E9A30954AC9002F9E67 /* AuthFeature */,
 			);
 			productName = SameHere;
 			productReference = 172BA3A83020870700D9CCB0 /* SameHere.app */;
@@ -220,7 +228,7 @@
 			mainGroup = 172BA39F3020870700D9CCB0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				175184123048C3D50055F102 /* XCLocalSwiftPackageReference "../AuthFeature" */,
+				17B88E9830954A8C002F9E67 /* XCRemoteSwiftPackageReference "Swift-Supabase-Auth-Package" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 172BA3A93020870700D9CCB0 /* Products */;
@@ -428,7 +436,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SameHere/SameHere.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = KV62XM9X65;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -441,7 +449,6 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -470,7 +477,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SameHere/SameHere.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = KV62XM9X65;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -483,7 +490,6 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,16 +636,21 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		175184123048C3D50055F102 /* XCLocalSwiftPackageReference "../AuthFeature" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../AuthFeature;
+/* Begin XCRemoteSwiftPackageReference section */
+		17B88E9830954A8C002F9E67 /* XCRemoteSwiftPackageReference "Swift-Supabase-Auth-Package" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/009Benny/Swift-Supabase-Auth-Package.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		175184133048C3D50055F102 /* AuthFeature */ = {
+		17B88E9A30954AC9002F9E67 /* AuthFeature */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = 17B88E9830954A8C002F9E67 /* XCRemoteSwiftPackageReference "Swift-Supabase-Auth-Package" */;
 			productName = AuthFeature;
 		};
 /* End XCSwiftPackageProductDependency section */
