@@ -21,12 +21,10 @@ xcuserdata/
 *.perspectivev3
 
 # Workspaces (CocoaPods, Carthage, SwiftPM can generate these)
-*.xcworkspace
 
 # Swift Package Manager
 /.build/
 /.swiftpm/
-Package.resolved
 
 # CocoaPods
 /Pods/

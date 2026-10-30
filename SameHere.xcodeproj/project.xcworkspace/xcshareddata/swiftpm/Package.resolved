@@ -1,0 +1,15 @@
+{
+  "originHash" : "e74ab2c4ea03abe1b1e7c600f1e91a274d7cfae30b268e439838b0a2d1908382",
+  "pins" : [
+    {
+      "identity" : "swift-supabase-auth-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/009Benny/Swift-Supabase-Auth-Package.git",
+      "state" : {
+        "revision" : "fa96775785f46c5ecf865feb6b1587913301331b",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}
